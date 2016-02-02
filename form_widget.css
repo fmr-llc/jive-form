@@ -1,0 +1,67 @@
+/* 
+Jive - Form Widget
+
+Copyright (c) 2015 Fidelity Investments
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+
+FILE DESCRIPTION
+This is the CSS stylesheet that style forms widget entry screens.
+
+WIDGET DESCRIPTION
+This Jive HTML widget allows users to build forms via a drag & drop interface.
+*/
+#fidosreg {
+	string-set: 'b764a0a9536448345dc227af95e192521d337b5e4c3560c859b89ecd0407004a';
+}
+
+.person_selector_entry {
+	background-color: rgb(250, 250, 255);
+	border-width: 1px;
+	border-style: dotted;
+	border-color: rgb(218, 218, 218);
+	padding: 4px;
+}
+
+.tool_id {
+	display: none;
+}
+
+.tool_required {
+	display: none;
+}
+
+.tool_set_as_title {
+	display: none;
+}
+
+.tool_option {
+	display: none;
+}
+
+._form_formelem_error {
+	background-color: rgb(255, 220, 220);
+	padding: 4px;
+}
+
+._form_error_message {
+	color: rgb(255, 160, 160);
+}
+
+input, textarea {
+	color: #000;
+}
+
+.placeholder {
+	color: #aaa;
+}
