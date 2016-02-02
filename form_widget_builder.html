@@ -1,0 +1,658 @@
+<!--
+Jive - Form Widget Builder
+
+Copyright (c) 2015 Fidelity Investments
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+FILE DESCRIPTION
+This is the builder application that presents a front end to users and allows
+them to drag and drop bootstrap elements to create a form.
+
+WIDGET DESCRIPTION
+This Jive HTML widget allows users to build forms via a drag & drop interface.
+-->
+<meta name="fidosreg" content="b764a0a9536448345dc227af95e192521d337b5e4c3560c859b89ecd0407004a">
+
+<script src='JQUERY'></script>
+<script>
+
+var jquery_content_id = "0";
+var library_loader_content_id = "0";
+
+var $j = jQuery.noConflict();
+$j("head").append('<scr'+'ipt src="/api/core/v3/attachments/file/' + library_loader_content_id + '/data"></scr'+'ipt>');
+</script>
+<script>
+$j.load_library('bootstrap.css');
+$j.load_library('bootstrap-theme.css');
+$j.load_library('bootstrap-datepicker.css');
+$j.load_library('form_widget_builder.css');
+$j.load_library('bootstrap.js');
+$j.load_library('bootstrap-datepicker.js');
+$j.load_library('form_widget_builder.js');
+</script>
+
+<div id='_form_mainFrame' class="_form_mainFrame form-horizontal">
+	<legend id="_form_title" class="text-center">Form Widget Builder</legend>
+
+	<div id="_form_form" class="form_frame form-horizontal"></div>
+
+	<div id='_form_toolbox'  class="toolbox_frame form-horizontal">
+
+		<div id="_form_toolbox_tools">
+
+			<legend class="text-center">Toolbox</legend>
+
+			<div id="tool_submitter" class="toolbox_element">
+				<span id="tool_id" class="tool_id"></span>
+				<div class="form-group">
+					<div class="col-xs-3"></div>
+					<label id="tool_label" class="col-xs-9">Form Submitter</label>
+				</div>
+				<div id="tool_submitter_id" class="form-group" style="display: none;">
+					<span id="tool_submitter_id_enable" class="tool_data"></span>
+					<label id="tool_submitter_id_label" class="col-xs-3 control-label">Username</label>
+					<label id="tool_submitter_id_value" class="col-xs-9">-</label>
+				</div>
+				<div id="tool_submitter_name" class="form-group" style="display: none;">
+					<span id="tool_submitter_name_enable" class="tool_data"></span>
+					<label id="tool_submitter_name_label" class="col-xs-3 control-label">Name</label>
+					<label id="tool_submitter_name_value" class="col-xs-9">-</label>
+				</div>
+				<div id="tool_submitter_title" class="form-group" style="display: none;">
+					<span id="tool_submitter_title_enable" class="tool_data"></span>
+					<label id="tool_submitter_title_label" class="col-xs-3 control-label">Title</label>
+					<label id="tool_submitter_title_value" class="col-xs-9">-</label>
+				</div>
+				<div id="tool_submitter_bu" class="form-group" style="display: none;">
+					<span id="tool_submitter_bu_enable" class="tool_data"></span>
+					<label id="tool_submitter_bu_label" class="col-xs-3 control-label">Business Unit</label>
+					<label id="tool_submitter_bu_value" class="col-xs-9">-</label>
+				</div>
+				<div id="tool_submitter_email" class="form-group" style="display: none;">
+					<span id="tool_submitter_email_enable" class="tool_data"></span>
+					<label id="tool_submitter_email_label" class="col-xs-3 control-label">Email</label>
+					<label id="tool_submitter_email_value" class="col-xs-9">-</label>
+				</div>
+				<div id="tool_submitter_phone" class="form-group" style="display: none;">
+					<span id="tool_submitter_phone_enable" class="tool_data"></span>
+					<label id="tool_submitter_phone_label" class="col-xs-3 control-label">Phone</label>
+					<label id="tool_submitter_phone_value" class="col-xs-9">-</label>
+				</div>
+			</div>
+
+			<div id="tool_personselector" class="toolbox_element">
+				<span id="tool_id" class="tool_id"></span>
+				<div id="tool_personselector_search" class="form-group">
+					<label id="tool_personselector_search_label" class="col-xs-3 control-label">Person</label>
+					<div class="col-xs-9">
+						<input id="tool_personselector_search_input" class="form-control _form_person_selector" name="textinput" type="text" placeholder="Enter name, id, or other search criteria">
+						<div id="tool_personselector_search_results"></div>
+					</div>
+				</div>
+				<div id="tool_personselector_heading" class="form-group" style="display: none;">
+					<div class="col-xs-3"></div>
+					<label id="tool_personselector_heading_label" class="col-xs-9"></label>
+				</div>
+				<div id="tool_personselector_id" class="form-group" style="display: none;">
+					<span id="tool_personselector_id_enable" class="tool_data"></span>
+					<label id="tool_personselector_id_label" class="col-xs-3 control-label">Username</label>
+					<label id="tool_personselector_id_value" class="col-xs-9">-</label>
+				</div>
+				<div id="tool_personselector_name" class="form-group" style="display: none;">
+					<span id="tool_personselector_name_enable" class="tool_data"></span>
+					<label id="tool_personselector_name_label" class="col-xs-3 control-label">Name</label>
+					<label id="tool_personselector_name_value" class="col-xs-9">-</label>
+				</div>
+				<div id="tool_personselector_title" class="form-group" style="display: none;">
+					<span id="tool_personselector_title_enable" class="tool_data"></span>
+					<label id="tool_personselector_title_label" class="col-xs-3 control-label">Title</label>
+					<label id="tool_personselector_title_value" class="col-xs-9">-</label>
+				</div>
+				<div id="tool_personselector_bu" class="form-group" style="display: none;">
+					<span id="tool_personselector_bu_enable" class="tool_data"></span>
+					<label id="tool_personselector_bu_label" class="col-xs-3 control-label">Business Unit</label>
+					<label id="tool_personselector_bu_value" class="col-xs-9">-</label>
+				</div>
+				<div id="tool_personselector_email" class="form-group" style="display: none;">
+					<span id="tool_personselector_email_enable" class="tool_data"></span>
+					<label id="tool_personselector_email_label" class="col-xs-3 control-label">Email</label>
+					<label id="tool_personselector_email_value" class="col-xs-9">-</label>
+				</div>
+				<div id="tool_personselector_phone" class="form-group" style="display: none;">
+					<span id="tool_personselector_phone_enable" class="tool_data"></span>
+					<label id="tool_personselector_phone_label" class="col-xs-3 control-label">Phone</label>
+					<label id="tool_personselector_phone_value" class="col-xs-9">-</label>
+				</div>
+			</div>
+
+			<div id="tool_textblock" class="toolbox_element">
+				<span id="tool_id" class="tool_id"></span>
+				<span id="tool_textblock_URL" class="tool_data"></span>
+				<span id="tool_textblock_include" style="display: none;">Yes</span>
+				<div class="form-group">
+					<label id="tool_label" class="col-xs-12">Text Block</label>
+				</div>
+			</div>
+
+			<div id="tool_input" class="toolbox_element">
+				<span id="tool_id" class="tool_id"></span>
+				<div class="form-group">
+					<label id="tool_label" class="col-xs-3 control-label">Text Input</label>
+					<div class="col-xs-9">
+						<input id="tool_input_input" class="form-control" name="textinput" type="text" placeholder="">
+					</div>
+				</div>
+			</div>
+
+			<div id="tool_textarea" class="toolbox_element">
+				<span id="tool_id" class="tool_id"></span>
+				<div class="form-group">
+					<label id="tool_label" class="col-xs-3 control-label">Text Area</label>
+					<div class="col-xs-9">
+						<textarea id="tool_textarea_textarea" class="form-control" name="textarea" placeholder=""></textarea>
+					</div>
+				</div>
+			</div>
+
+			<div id="tool_radio" class="toolbox_element">
+				<span id="tool_id" class="tool_id"></span>
+				<div class="form-group">
+					<label id="tool_label" class="col-xs-3 control-label">Radio Buttons</label>
+					<span id="tool_radio_option_text" class="tool_data">Option one&#13;&#10;Option two</span>
+					<div id="tool_radio_options" class="col-xs-9 controls">
+						<label class="radio-inline">
+							<input type="radio" name="radios" id="radios-0" value="Option one">
+							Option one
+						</label>
+						<label class="radio-inline" for="-">
+							<input type="radio" name="radios" id="radios-1" value="Option two">
+							Option two
+						</label>
+					</div>
+				</div>
+			</div>
+
+			<div id="tool_checkbox" class="toolbox_element">
+				<span id="tool_id" class="tool_id"></span>
+				<div class="form-group">
+					<label id="tool_label" class="col-xs-3 control-label">Checkboxes</label>
+					<span id="tool_checkbox_option_text" class="tool_data">Option one&#13;&#10;Option two</span>
+					<div id="tool_checkbox_options" class="col-xs-9 controls">
+						<label class="checkbox-inline">
+							<input type="checkbox" name="checkboxes" id="checkboxes-0" value="Option one">
+							Option one
+						</label>
+						<label class="checkbox-inline">
+							<input type="checkbox" name="checkboxes" id="checkboxes-1" value="Option two">
+							Option two
+						</label>
+					</div>
+				</div>
+			</div>
+
+			<div id="tool_singleselect" class="toolbox_element">
+				<span id="tool_id" class="tool_id"></span>
+				<div class="form-group">
+					<label id="tool_label" class="col-xs-3 control-label">Single Select</label>
+					<span id="tool_singleselect_option_text" class="tool_data">Option one&#13;&#10;Option two</span>
+					<div class="col-xs-9 controls">
+						<select id="tool_singleselect_options" name="tool_singleselect_options" class="input-xlarge form-control">
+							<option id="singleselect1-0">Option one</option>
+							<option id="singleselect1-1">Option two</option>
+						</select>
+					</div>
+				</div>
+			</div>
+
+			<div id="tool_multiselect" class="toolbox_element">
+				<span id="tool_id" class="tool_id"></span>
+				<div class="form-group">
+					<label id="tool_label" class="col-xs-3 control-label">Multi Select</label>
+					<span id="tool_multiselect_option_text" class="tool_data">Option one&#13;&#10;Option two</span>
+					<div class="col-xs-9 controls">
+						<select id="tool_multiselect_options" name="tool_multiselect_options" class="input-xlarge form-control" multiple="multiple">
+							<option id="multiselect1-0">Option one</option>
+							<option id="multiselect1-1">Option two</option>
+						</select>
+					</div>
+				</div>
+			</div>
+
+			<div id="tool_date" class="toolbox_element">
+				<span id="tool_id" class="tool_id"></span>
+				<div class="form-group">
+					<span id="tool_date_type" class="tool_option">entry</span>
+					<label id="tool_label" class="col-xs-3 control-label">Date</label>
+					<div id='tool_date_dt' class='col-xs-9'>
+						<input id='tool_date_input#' class='tool_date_input' placeholder='mm/dd/yyyy' />
+						<label id='tool_date_current' class='tool_data'>mm/dd/yyyy</label>
+					</div>
+				</div>
+			</div>
+
+ 			<div id="tool_attachment" class="toolbox_element">
+ 				<span id="tool_id" class="tool_id"></span>
+ 				<div class="form-group">
+ 					<label id="tool_label" class="col-xs-3 control-label">Attachment</label>
+ 					<div class="col-xs-9">
+ 						<div style="padding: 5px;margin-top: 3px;margin-bottom: 10px;"><div class="color:#fff;">Maximum size: 8 MB | Maximum attachments allowed: 3</div></div>
+ 						<input id="tool_attachment_input" class="form-control" name="textinput" type="file" multiple="">
+ 					</div>
+ 				</div>
+ 			</div>
+
+		</div>
+
+	</div>
+
+	<div id='_form_trashcan'  class="trashcan_frame">
+
+		<div class="trashcan_pointer"></div>
+
+		<div class="trashcan_container">Drag element here to delete</div>
+
+	</div>
+
+	<div id='_form_editbox'  class="form-horizontal">
+
+		<div class="editbox_pointer"></div>
+
+		<div class="editbox_frame">
+			<legend id="editbox_title" class="text-center">Edit</legend>
+
+			<div id="editbox_editframe">
+				<div id="editbox_formname">
+					<div class="form-group">
+						<div class="col-xs-12">
+			        		<input id="editbox_formname_input" name="editbox_formname_input" type="text" class="input-xlarge form-control" placeholder="Enter Form Name">
+			        		</br>
+				        </div>
+			        </div>
+					<div id="editbox_formname_set_as_title" class="form-group">
+						<label class="col-xs-3 control-label"></label>
+						<div class="col-xs-9">
+							<label title="Jive requires all documents to have a unique name. When your form is posted, it will use this as the name of the form and append the timestamp it was created to make the name unique.">Set as title&nbsp;<input id="editbox_formname_set_as_title_checkbox" type="checkbox" value="Required"></label>
+						</div>
+					</div>
+			    </div>
+
+				<div id="editbox_destination">
+					<div id="editbox_destination_URL">
+						<div class="form-group">
+							<div class="col-xs-12">
+								<label><input id="editbox_destination_URL_chk" type="checkbox" name="checkboxes" value="Yes" checked>Submit Form</label>
+								<div id="editbox_destination_URL_frame">
+									<label class="col-xs-12" title="Enter the URL of the Space, Group, or Project you want your form posted.">
+										Enter the URL for the place you want to post the content:
+									</label><br>
+									<input id="editbox_destination_input" name="editbox_destination_input" type="text" class="input-xlarge form-control" placeholder="URL of location">
+								</br>
+								</br>
+								</div>
+							</div>
+							<div class="col-xs-12">
+								<label><input id="editbox_destination_email_chk" type="checkbox" name="checkboxes" value="Yes">Email Form</label>
+								<div id="editbox_destination_email_frame" style="display: none;">
+									<label class="col-xs-12" title="Enter a comma separated list of email addresses to send the form.\nExample: person_1@fmr.com,person_2@fmr.com">
+										Enter Email addresses to populate the Send To field:
+									</label><br>
+									<input id="editbox_destination_email" name="editbox_destination_email" type="text" class="input-xlarge form-control" placeholder="comma separated list or leave blank">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div id="editbox_person">
+					<div id="editbox_person_selector">
+						<div class="form-group">
+							<label class="col-xs-3 control-label">Input Label</label>
+							<div class="col-xs-9">
+								<input id="editbox_person_selector_label" name="editbox_person_selector_label" type="text" class="input-xlarge form-control" placeholder="Enter Label Text">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-xs-3 control-label">Input Placeholder</label>
+							<div class="col-xs-9">
+								<input id="editbox_person_selector_placeholder" name="editbox_person_selector_placeholder" type="text" class="input-xlarge form-control" placeholder="Enter text to display when field is empty">
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-3 control-label">Heading Text</label>
+						<div class="col-xs-9">
+							<input id="editbox_person_heading" name="editbox_person_heading" type="text" class="input-xlarge form-control" placeholder="Enter heading, or leave blank to not have a heading">
+						</div>
+					</div>
+					<div id="editbox_person_information" class="form-group">
+						<label id="tool_label" class="col-xs-3 control-label">Display Fields</label>
+						<div class="col-xs-9">
+							<div id="editbox_person_options">
+								<label class="checkbox-inline">
+									<input id="editbox_person_options_id" type="checkbox" name="checkboxes" value="ID">
+									Username
+								</label>
+								</br>
+								<label class="checkbox-inline">
+									<input id="editbox_person_options_name" type="checkbox" name="checkboxes" value="Name">
+									Name
+								</label>
+								</br>
+									<input id="editbox_person_options_title" type="checkbox" name="checkboxes" value="Name">
+									Title
+								</label>
+								</br>
+								<label class="checkbox-inline">
+									<input id="editbox_person_options_bu" type="checkbox" name="checkboxes" value="BU">
+									Business Unit
+								</label>
+								</br>
+								<label class="checkbox-inline">
+									<input id="editbox_person_options_email" type="checkbox" name="checkboxes" value="Email">
+									Email
+								</label>
+								</br>
+								<label class="checkbox-inline">
+									<input id="editbox_person_options_phone" type="checkbox" name="checkboxes" value="Phone">
+									Phone
+								</label>
+							</div>
+						</div>
+					</div>
+					<div id="editbox_person_required" class="form-group">
+						<label class="col-xs-3 control-label"></label>
+						<div class="col-xs-9">
+							<label class="col-xs-9" title="Field must be filled out for form to be submitted.">Required&nbsp;<input id="editbox_person_required_checkbox" type="checkbox" value="Required"></label>
+						</div>
+					</div>
+				</div>
+
+				<div id="editbox_textblock">
+					<div class="form-group">
+						<label class="col-xs-3 control-label">Display Text</label>
+						<div class="col-xs-9">
+							<input id="editbox_textblock_label" name="editbox_textblock_label" type="text" class="input-xlarge form-control" placeholder="Enter Label">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-3 control-label">URL</label>
+						<div class="col-xs-9">
+							<input id="editbox_textblock_URL" name="editbox_textblock_URL" type="text" class="input-xlarge form-control" placeholder="Enter URL, or leave blank if you do not want a URL link">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-3"></label>
+						<div class="col-xs-9">
+							<label><input id="editbox_textblock_include" type="checkbox" name="checkboxes" value="Yes" checked>Include in Output Form</label>
+						</div>
+					</div>
+				</div>
+
+				<div id="editbox_input">
+					<div class="form-group">
+						<label class="col-xs-3 control-label">Label</label>
+						<div class="col-xs-9">
+							<input id="editbox_input_label" name="editbox_input_label" type="text" class="input-xlarge form-control" placeholder="Enter Label Text">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-3 control-label">Placeholder</label>
+						<div class="col-xs-9">
+							<input id="editbox_input_placeholder" name="editbox_input_placeholder" type="text" class="input-xlarge form-control" placeholder="Enter Placeholder Text">
+						</div>
+					</div>
+					<div id="editbox_input_set_as_title" class="form-group">
+						<label class="col-xs-3 control-label"></label>
+						<div class="col-xs-9">
+							<label title="Jive requires all documents to have a unique name. When your form is posted, it will use this as the name of the form and append the timestamp it was created to make the name unique.">Set as title&nbsp;<input id="editbox_input_set_as_title_checkbox" type="checkbox" value="Required" onclick="if ($j(this).attr('checked')) { $j('#editbox_input_required_checkbox').attr('checked',true);$j('#editbox_input_required_checkbox').attr('disabled',true);} else { $j('#editbox_input_required_checkbox').attr('disabled',false); }"></label>
+						</div>
+					</div>
+					<div id="editbox_input_required" class="form-group">
+						<label class="col-xs-3 control-label"></label>
+						<div class="col-xs-9">
+							<label title="Field must be filled out for form to be submitted.">Required&nbsp;<input id="editbox_input_required_checkbox" type="checkbox" value="Required"></label>
+						</div>
+					</div>
+				</div>
+
+				<div id="editbox_options">
+					<div class="form-group">
+						<label class="col-xs-3 control-label">Label</label>
+						<div class="col-xs-9">
+							<input id="editbox_options_label" name="editbox_options_label" type="text" class="input-xlarge form-control" placeholder="Enter Label Text">
+						</div>
+					</div>
+					<div id="editbox_options_optionlist" class="form-group">
+						<label class="col-xs-3 control-label">Options</label>
+						<div class="col-xs-9">
+							<textarea id="editbox_options_options" name="editbox_options_options" type="text" class="input-xlarge form-control">Option One&#13;&#10;Option Two</textarea>
+						</div>
+					</div>
+					<div id="editbox_options_set_as_title" class="form-group">
+						<label class="col-xs-3 control-label"></label>
+						<div class="col-xs-9">
+							<label title="Jive requires all documents to have a unique name. When your form is posted, it will use this as the name of the form and append the timestamp it was created to make the name unique.">Set as title&nbsp;<input id="editbox_options_set_as_title_checkbox" type="checkbox" value="Required" onclick="if ($j(this).attr('checked')) { $j('#editbox_options_required_checkbox').attr('checked',true);$j('#editbox_options_required_checkbox').attr('disabled',true);} else { $j('#editbox_options_required_checkbox').attr('disabled',false); }"></label>
+						</div>
+					</div>
+					<div id="editbox_options_required" class="form-group">
+						<label class="col-xs-3 control-label"></label>
+						<div class="col-xs-9">
+							<label title="Field must be filled out for form to be submitted.">Required&nbsp;<input id="editbox_options_required_checkbox" type="checkbox" value="Required"></label>
+						</div>
+					</div>
+				</div>
+
+				<div id="editbox_date">
+					<div class="form-group">
+						<label class="col-xs-3 control-label">Label</label>
+						<div class="col-xs-9">
+							<input id="editbox_date_label_input" name="editbox_date_label_input" type="text" class="input-xlarge form-control" placeholder="Enter Label Text">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-xs-3 control-label">Type</label>
+						<div id="editbox_date_option" class="col-xs-9">
+							<label class="radio-inline">
+								<input id="editbox_date_option_entry" type="radio" name="radios" value="entry" checked="checked">
+								Date Entry
+							</label>
+							<label class="radio-inline">
+								<input id="editbox_date_option_current" type="radio" name="radios" value="current">
+								Current Date
+							</label>
+						</div>
+					</div>
+					<div id="editbox_date_required" class="form-group">
+						<label class="col-xs-3 control-label"></label>
+						<div class="col-xs-9">
+							<label title="Field must be filled out for form to be submitted.">Required&nbsp;<input id="editbox_date_required_checkbox" type="checkbox" value="Required"></label>
+						</div>
+					</div>
+				</div>
+
+				<div id="editbox_buttons" class="control-group text-center">
+					<button id="editbox_OK" name="editbox_OK" class="btn btn-default _form_formcontrols_button" onclick="formUpdate()">OK</button>
+					<button id="editbox_Cancel" name="editbox_Cancel" class="btn btn-default _form_formcontrols_button" onclick="hideEditBox()">Cancel</button>
+				</div>
+			</div>
+
+			<div id="editbox_category">
+				<div id="editbox_category_enable" class="control-group text-center" style="display:none;">
+					<label>This place has configured categories.  Do you want to enable categorization of the submitted forms?</label>
+					</br>
+					<button id="editbox_category_enable_yes" name="editbox_category_enable_yes" class="btn btn-default _form_formcontrols_button" onclick="enableCategory()">Yes</button>
+					<button id="editbox_category_enable_no" name="editbox_category_enable_no" class="btn btn-default _form_formcontrols_button" onclick="removeCategory()">No</button>
+				</div>
+
+				<div id="editbox_category_setorselect" class="control-group text-center" style="display:none;">
+					<label>Do you want to Set a category or allow the user to Select from the list when they submit the form?</label>
+					</br>
+					<button id="editbox_category_setorselect_set" name="editbox_category_setorselect_set" class="btn btn-default _form_formcontrols_button" onclick="setCategory()">Set</button>
+					<button id="editbox_category_setorselect_select" name="editbox_category_setorselect_set" class="btn btn-default _form_formcontrols_button" onclick="selectCategory()">Select</button>
+					<button id="editbox_category_setorselect_cancel" name="editbox_category_setorselect_cancel" class="btn btn-default _form_formcontrols_button" onclick="setOrSelectCategoryCancel()">Cancel</button>
+				</div>
+
+				<div id="editbox_category_set" class="control-group text-center" style="display:none;">
+					<label>Select category</label>
+					<select id="editbox_category_set_list" name="editbox_category_set_list" class="input-xlarge form-control">
+						<option>Option one</option>
+						<option>Option two</option>
+					</select>
+					</br>
+					<button id="editbox_category_set_ok" name="editbox_category_set_ok" class="btn btn-default _form_formcontrols_button" onclick="setCategoryOK()">OK</button>
+					<button id="editbox_category_set_cancel" name="editbox_category_set_cancel" class="btn btn-default _form_formcontrols_button" onclick="setCategoryCancel()">Cancel</button>
+				</div>
+
+				<div id="editbox_category_singleormultiple" class="control-group text-center" style="display:none;">
+					<label>Do you want category selection to be single select or multiple select?</label>
+					</br>
+					<button id="editbox_category_singleormultiple_single" name="editbox_category_singleormultiple_single" class="btn btn-default _form_formcontrols_button" onclick="singleCategory()">Single</button>
+					<button id="editbox_category_singleormultiple_multiple" name="editbox_category_singleormultiple_multiple" class="btn btn-default _form_formcontrols_button" onclick="multipleCategory()">Multiple</button>
+					<button id="editbox_category_singleormultiple_cancel" name="editbox_category_singleormultiple_cancel" class="btn btn-default _form_formcontrols_button" onclick="singleOrMultipleCategoryCancel()">Cancel</button>
+				</div>
+
+				<div id="editbox_tags" class="control-group text-center" style="display:none;">
+					<label>Enter tags to be applied to submitted forms</label>
+					<input id="editbox_tags_input" name="editbox_tags_input" type="text" class="input-xlarge form-control" placeholder="Enter comma separated list of tags">
+					</br>
+					<button id="editbox_tags_ok" name="editbox_category_set_ok" class="btn btn-default _form_formcontrols_button" onclick="setTagsDone()">Done</button>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<div id="_form_showCode" class="form-horizontal"></div>
+
+	<div id="_form_code">
+		<textarea id="code"></textarea>
+		<button id="_form_code_hide" name="_form_code_hide" class="btn btn-default" onclick="_form_hideCode();">Hide Code</button>
+	</div>
+
+	<div id="_form_load">
+		<legend id="editbox_title" class="text-center">Select form to load...</legend>
+		<div id="_form_load_designs" class='list-group'></div>
+		<div class="control-group text-center">
+			<button id="_form_load_prev" name="_form_load_prev" class="btn btn-default _formreport_formcontrols_button" onclick="_form_prev_designs();" disabled>Previous Page</button>
+			<button id="_form_load_load" name="_form_load_ok" class="btn btn-default _form_formcontrols_button" onclick="_form_loadCode_Load();">Load</button>
+			<button id="_form_load_cancel" name="_form_load_cancel" class="btn btn-default _form_formcontrols_button" onclick="_form_loadCode_Cancel();">Cancel</button>
+			<button id="_form_load_next" name="_form_load_next" class="btn btn-default _formreport_formcontrols_button" onclick="_form_next_designs();" disabled>Next Page</button>
+		</div>
+	</div>
+
+	<div id="_form_select_color">
+		<legend id="editbox_title" class="text-center">Select submit form color scheme...</legend>
+		<div id="_form_color_schemes" class='list-group'>
+			<a id="_form_color_scheme_basic" class="list-group-item panel panel-default">
+				<div class="panel-heading">Basic</div>
+				<div class="panel-body">
+					<table class="gwd-table-vhxf gwd-table-aaxz" style="border-spacing: 0; border-collapse: collapse; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; color: #333;">
+						<tbody>
+							<tr style="display: table-row;">
+								<td class="gwd-td-mafh" style="border-collapse: collapse; border-spacing: 0px; padding: 10px; border: 0px; color: rgb(130,130,160);"><b>Name</b></td>
+								<td style="border-collapse: collapse; border-spacing: 0; padding: 10px; border: 0px">Geoffrey the Giraffe</td>
+							</tr>
+							<tr style="display: table-row;">
+								<td class="gwd-td-mafh" style="border-collapse: collapse; border-spacing: 0px; padding: 10px; border: 0px; color: rgb(130,130,160);"><b>Subjects to Study</b></td>
+								<td style="border-collapse: collapse; border-spacing: 0; padding: 10px; border: 0px">Social Studies, Math, English, Topics in Metaphysics and Epistemology</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</a>
+			<a id="_form_color_scheme_orange" class="list-group-item panel panel-default">
+				<div class="panel-heading">Orange</div>
+				<div class="panel-body">
+					<table class="gwd-table-vhxf gwd-table-aaxz" style="border-spacing: 0; border-collapse: collapse; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; color: #333;">
+						<tbody>
+							<tr style="display: table-row;">
+								<td class="gwd-td-mafh" style="border-collapse: collapse; border-spacing: 0px; padding: 10px; border: 1px solid #F7901E; background-color: #f7cb9a;">Name</td>
+								<td style="border-collapse: collapse; border-spacing: 0; padding: 10px; border: 1px solid #F7901E;">Geoffrey the Giraffe</td>
+							</tr>
+							<tr style="display: table-row;">
+								<td style="border-collapse: collapse; border-spacing: 0; background-color: #f7cb9a; padding: 10px; border: 1px solid #F7901E;">Subjects to Study</td>
+								<td style="border-collapse: collapse; border-spacing: 0; padding: 10px; border: 1px solid #F7901E;">Social Studies, Math, English, Topics in Metaphysics and Epistemology</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</a>
+			<a id="_form_color_scheme_green" class="list-group-item panel panel-default">
+				<div class="panel-heading">Green</div>
+				<div class="panel-body">
+					<table class="gwd-table-vhxf gwd-table-aaxz" style="border-spacing: 0; border-collapse: collapse; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; color: #333;">
+						<tbody>
+							<tr style="display: table-row;">
+								<td class="gwd-td-mafh" style="border-collapse: collapse; border-spacing: 0px; padding: 10px; border: 1px solid #7e8879; background-color: #c4e1b5;">Name</td>
+								<td style="border-collapse: collapse; border-spacing: 0; padding: 10px; border: 1px solid #7e8879">Geoffrey the Giraffe</td>
+							</tr>
+							<tr style="display: table-row;">
+								<td style="border-collapse: collapse; border-spacing: 0; background-color: #c4e1b5; padding: 10px; border: 1px solid #7e8879">Subjects to Study</td>
+								<td style="border-collapse: collapse; border-spacing: 0; padding: 10px; border: 1px solid #7e8879">Social Studies, Math, English, Topics in Metaphysics and Epistemology</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</a>
+			<a id="_form_color_scheme_blue" class="list-group-item panel panel-default">
+				<div class="panel-heading">Blue</div>
+				<div class="panel-body">
+					<table class="gwd-table-vhxf gwd-table-aaxz" style="border-spacing: 0; border-collapse: collapse; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; color: #333;">
+						<tbody>
+							<tr style="display: table-row;">
+								<td class="gwd-td-mafh" style="border-collapse: collapse; border-spacing: 0px; padding: 10px; border: 1px solid #85e1ff; background-color: #ebfaff;">Name</td>
+								<td style="border-collapse: collapse; border-spacing: 0; padding: 10px; border: 1px solid #85e1ff;">Geoffrey the Giraffe</td>
+							</tr>
+							<tr style="display: table-row;">
+								<td style="border-collapse: collapse; border-spacing: 0; background-color: #ebfaff; padding: 10px; border: 1px solid #85e1ff;">Subjects to Study</td>
+								<td style="border-collapse: collapse; border-spacing: 0; padding: 10px; border: 1px solid #85e1ff;">Social Studies, Math, English, Topics in Metaphysics and Epistemology</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</a>
+			<a id="_form_color_scheme_gray" class="list-group-item panel panel-default">
+				<div class="panel-heading">Gray</div>
+				<div class="panel-body">
+					<table class="gwd-table-vhxf gwd-table-aaxz" style="border-spacing: 0; border-collapse: collapse; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; color: #333;">
+						<tbody>
+							<tr style="display: table-row;">
+								<td class="gwd-td-mafh" style="border-collapse: collapse; border-spacing: 0px; padding: 10px; border: 1px solid #808080; background-color: #dddddd;">Name</td>
+								<td style="border-collapse: collapse; border-spacing: 0; padding: 10px; border: 1px solid #808080;">Geoffrey the Giraffe</td>
+							</tr>
+							<tr style="display: table-row;">
+								<td style="border-collapse: collapse; border-spacing: 0; background-color: #dddddd; padding: 10px; border: 1px solid #808080;">Subjects to Study</td>
+								<td style="border-collapse: collapse; border-spacing: 0; padding: 10px; border: 1px solid #808080;">Social Studies, Math, English, Topics in Metaphysics and Epistemology</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</a>
+		</div>
+	</div>
+
+	<div class="_form_tool_drag"></div>
+
+	<div id="_form_code_format"></div>
+
+	<div id="_form_error_dialog">
+		<h1>ERROR</h1>
+		<div id="_form_error_dialog_message"></div>
+		<div class="control-group text-center">
+			<button id="_form_error_dialog_ok" class="btn btn-default _formreport_formcontrols_button" onclick="_form_error_dismiss();" disabled>OK</button>
+		</div>
+	</div>
+
+	<label style="width: 100%"></label>
+</div>
