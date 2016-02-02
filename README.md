@@ -128,7 +128,7 @@ Your Form Builder is now set up.  Site admins can use the below instructions to 
 Build the Form
 ------------------------
 * The starting screen displays an empty form on the left, and a toolbox on the right.
-<p><img src="docs/form-widget.jpg" /></p>
+<p><img src="docs/form-widget-builder.jpg" /></p>
 * Click the top Form Name field at the top.  This will switch the Toolbox on the right to reveal the edit properties for the particular field.
 <p><img src="docs/form-widget-name.jpg" /></p>
   In this case, it displays the Edit Form Name properties which simply has an input field to change the name of the form.  Enter a unique name you would like to give your form, and click OK.  Note that this will be the initial part of the name of the submitted documents posted by the finished form.  It will suffix this with the timestamp the form was submitted (example is at the end).  This will also become the name of the form design in your personal container when you save it.  Once you click OK, the form name will get updated, and the pink background is removed, indicating that the field has been assigned the appropriate values.
