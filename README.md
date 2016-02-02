@@ -129,23 +129,43 @@ Build the Form
 ------------------------
 * The starting screen displays an empty form on the left, and a toolbox on the right.
 <p><img src="docs/form-widget-builder.jpg" /></p>
-* Click the top Form Name field at the top.  This will switch the Toolbox on the right to reveal the edit properties for the particular field.
+* Click the <b>Form name</b> field at the top.  This will switch the Toolbox on the right to reveal the edit properties for the particular field.
 <p><img src="docs/form-widget-name.jpg" /></p>
   In this case, it displays the Edit Form Name properties which simply has an input field to change the name of the form.  Enter a unique name you would like to give your form, and click OK.  Note that this will be the initial part of the name of the submitted documents posted by the finished form.  It will suffix this with the timestamp the form was submitted (example is at the end).  This will also become the name of the form design in your personal container when you save it.  Once you click OK, the form name will get updated, and the pink background is removed, indicating that the field has been assigned the appropriate values.
-* Drag tool elements from the toolbox, and drop them into the form in the area designated with "Drag toolbox Element Here".
-<p><img src="docs/form-widget-toolbox.jpg" /></p>
-  Notice that each element dropped into the form will have a pink "not set" background and an Edit pane opens for the element to the right of where it is dropped.  Once the details are entered, click OK to save the information to the form and the pink background will be removed.  The following tools are available:
-  * Form Submitter - This tool is used to display information about the user on the form.  When the form loads, it will look at the users identity and get the selected fields from the user's profile and automatically display the information on the form.  No entry is required.
-  * Person Selector - This tool is similar to the Submitter, except it presents a search box where the form user can supply name, ID, etc, and it will look for matching profiles.  A list of matches is returned.  When the form user selects a match from the list, the user's profile information is looked up and the selected fields are displayed in the form.  This field also has a Required check-box, which specifies whether it must be filled in prior to the user submitting the form.
-  * Text Block - This allows specific text to  be displayed in the form.  A URL link can also be specified, and the displayed text will be turned into a link to that URL.  Also, the user can opt to have this field NOT be part of the submitted form.  This is useful when providing instructions for users when submitting information, but is not desired in the output form.
-  * Text Input - This is a basic text input field.  You can specify the ID of the field, the Label or Heading of the input, as well as the placeholder text, which is what is displayed when the field is empty.  This field also has a Required check-box, which specifies whether it must be filled in prior to the user submitting the form.
-  * Text Area - This is a large text input field, when the size of the entry field needs to be more than a single line.  The settings are the same as a Text Input field.
-  * Radio Buttons - This creates a set of radio buttons.  This entry is useful when the user must select one of a given number of options.  You can specify the ID of the field, the Label, and the option list.  The option list is entered one option per line.  This field also has a Required check-box, which specifies whether it must be filled in prior to the user submitting the form.
-  * Check Boxes - This creates a set of check-box options.  This entry is useful when the user needs to be able to select zero or more different options from a limited list.  You can specify the ID of the field, the Label, and the option list.  The option list is entered one option per line.  This field also has a Required check-box, which specifies whether it must be filled in prior to the user submitting the form.
-  * Single Select - This creates a single select (drop-down) list box.  This entry is useful when the user needs to select one option from a large list.  You can specify the ID of the field, the Label, and the option list.  The option list is entered one option per line.  This field also has a Required check-box, which specifies whether it must be filled in prior to the user submitting the form.
-  * Multi Select - This creates a multi-select list box.  This entry is useful when the user needs to select zero or more options from a large set of options.  You can specify the ID of the field, the Label, and the option list.  The option list is entered one option per line.  This field also has a Required check-box, which specifies whether it must be filled in prior to the user submitting the form.
-  * Date - This creates a input field with a built-in calendar and time selector.  This entry is useful when you need to specify a date, date and time, or time.  You can specify the ID of the field, the Label, and the type of entry.  The types are Date, Date & Time, or Time.  This field also has a Required check-box, which specifies whether it must be filled in prior to the user submitting the form.  The resulting entry allows the user to hand enter the data, or select it using the visual calendar and time selectors.
-  * Attachment - This allows form submissions to include file attachments.
+* Drag form elements from the toolbox, and drop them into the form in the area designated with "Drag toolbox Element Here".  Notice that each element dropped into the form will have a pink "not set" background and an Edit pane opens for the element to the right of where it is dropped.  Once the details are entered, click OK to save the information to the form and the pink background will be removed.  The following tools are available:
+  * Form Submitter
+  <p><img src="docs/form-widget-submitter.jpg" /></p>
+  This tool is used to display information about the user on the form.  When the form loads, it will look at the users identity and get the selected fields from the user's profile and automatically display the information on the form.  No entry is required.
+  * Person Selector
+  <p><img src="docs/form-widget-person.jpg" /></p>
+  This tool is similar to the Submitter, except it presents a search box where the form user can supply name, ID, etc, and it will look for matching profiles.  A list of matches is returned.  When the form user selects a match from the list, the user's profile information is looked up and the selected fields are displayed in the form.  This field also has a Required check-box, which specifies whether it must be filled in prior to the user submitting the form.
+  * Text Block
+  <p><img src="docs/form-widget-textblock.jpg" /></p>
+  This allows specific text to  be displayed in the form.  A URL link can also be specified, and the displayed text will be turned into a link to that URL.  Also, the user can opt to have this field NOT be part of the submitted form.  This is useful when providing instructions for users when submitting information, but is not desired in the output form.
+  * Text Input
+  <p><img src="docs/form-widget-textinput.jpg" /></p>
+  This is a basic text input field.  You can specify the ID of the field, the Label or Heading of the input, as well as the placeholder text, which is what is displayed when the field is empty.  This field also has a Required check-box, which specifies whether it must be filled in prior to the user submitting the form.
+  * Text Area
+  <p><img src="docs/form-widget-textarea.jpg" /></p>
+  This is a large text input field, when the size of the entry field needs to be more than a single line.  The settings are the same as a Text Input field.
+  * Radio Buttons
+  <p><img src="docs/form-widget-radio.jpg" /></p>
+  This creates a set of radio buttons.  This entry is useful when the user must select one of a given number of options.  You can specify the ID of the field, the Label, and the option list.  The option list is entered one option per line.  This field also has a Required check-box, which specifies whether it must be filled in prior to the user submitting the form.
+  * Check Boxes
+  <p><img src="docs/form-widget-checkbox.jpg" /></p>
+  This creates a set of check-box options.  This entry is useful when the user needs to be able to select zero or more different options from a limited list.  You can specify the ID of the field, the Label, and the option list.  The option list is entered one option per line.  This field also has a Required check-box, which specifies whether it must be filled in prior to the user submitting the form.
+  * Single Select
+  <p><img src="docs/form-widget-singleselect.jpg" /></p>
+  This creates a single select (drop-down) list box.  This entry is useful when the user needs to select one option from a large list.  You can specify the ID of the field, the Label, and the option list.  The option list is entered one option per line.  This field also has a Required check-box, which specifies whether it must be filled in prior to the user submitting the form.
+  * Multi Select
+  <p><img src="docs/form-widget-multiselect.jpg" /></p>
+  This creates a multi-select list box.  This entry is useful when the user needs to select zero or more options from a large set of options.  You can specify the ID of the field, the Label, and the option list.  The option list is entered one option per line.  This field also has a Required check-box, which specifies whether it must be filled in prior to the user submitting the form.
+  * Date
+  <p><img src="docs/form-widget-date.jpg" /></p>
+  This creates a input field with a built-in calendar and time selector.  This entry is useful when you need to specify a date, date and time, or time.  You can specify the ID of the field, the Label, and the type of entry.  The types are Date, Date & Time, or Time.  This field also has a Required check-box, which specifies whether it must be filled in prior to the user submitting the form.  The resulting entry allows the user to hand enter the data, or select it using the visual calendar and time selectors.
+  * Attachment
+  <p><img src="docs/form-widget-attachment.jpg" /></p>
+  This allows form submissions to include file attachments.
 
 * Continue dragging new elements onto your page, configuring them, and arranging them until you are satisfied with the design.
 * Determine where you want your form to post the output documents.  This needs to be a location that your target audience must be able to post content, otherwise the form will not be able to submit the form entries for the user.  Once decided, go to this location and get the URL of the place.
@@ -166,6 +186,7 @@ Usage
 -----
 Once the Form is set up on a page, users can fill out the form and submit entries.  Each time a form is submitted, a document is created in the destination with the configured category and tags.  The document will contain a table with one row per form element.  The first column will contain the field label, and the second column will contain the user's entry.
 <p><img src="docs/form-widget-submission.jpg" /></p>
+Note the title of the submitted document is the form name with a timestamp appended to it so the the Jive document name will be unique.
 
 
 Issues
