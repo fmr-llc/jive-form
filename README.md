@@ -1,7 +1,7 @@
 Jive - Form Widget
 ==================
 <p><img src="docs/form-widget-overview.jpg" /></p>
-The ExportContainers widget helps create content within Jive with consistent ExportContaineratting and controlled inputs.  This is a [Jive](https://community.jivesoftware.com/welcome) HTML widget project that creates a builder application allowing users to drag & drop [Bootstrap](http://getbootstrap.com/) elements to create a ExportContainer design.  The widget works with Jive content types, enables categorizing and tagging, and allows attachments to be included.  ExportContainer designs can be saved and reloaded later to modify the ExportContainer.  Each submitted ExportContainer creates a unique document with a table of the ExportContainer fields with the user’s entered inExportContaineration.  This makes it easy to guide users what to submit as well as making the submissions much easier to process.
+The Form widget helps create content within Jive with consistent output format and controlled inputs.  This is a [Jive](https://community.jivesoftware.com/welcome) HTML widget project that creates a builder application allowing users to drag & drop [Bootstrap](http://getbootstrap.com/) elements to create a form design.  The widget works with Jive content types, enables categorizing and tagging, and allows attachments to be included.  Form designs can be saved and reloaded later to modify the form.  Each submitted form creates a unique document with a table of the form fields with the user’s entered information.  This makes it easy to guide users what to submit as well as making the submissions much easier to process.
       
 Prerequisite
 ------------
