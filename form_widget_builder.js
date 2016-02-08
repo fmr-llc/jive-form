@@ -68,14 +68,23 @@ var blankDesign = "<div id='_form_formname' class='_form_formheader _form_elemen
 				+ "<div id='_form_submit' class='_form_formfooter _form_element_notset'>"
    				+ "	<div id='_form_category' class='form-group'></div>"
 				+ "	<div id='_form_formdestination' class='form-group'>"
-				+ "		<div class='col-xs-3'> </div>"
-				+ "		<button id='_form_formdestination_submit' name='_form_formdestination_submit' class='btn btn-default' onclick='_form_submitForm()' disabled>Submit</button>"
-				+ "		<span id='_form_formdestination_location' class='_form_formelem_remove'>Click to set form destination</span>"
-				+ "		<span id='_form_formdestination_submitURL' style='display: none;'>Y</span>"
-				+ "		<span id='_form_formdestination_URL' style='display: none;'></span>"
-				+ "		<span id='_form_formdestination_ID' style='display: none;'></span>"
-				+ "		<span id='_form_formdestination_submitemail' style='display: none;'>N</span>"
-				+ "		<span id='_form_formdestination_email' style='display: none;'></span>"
+				+ "		<div class='col-xs-3'></div>"
+				+ "		<div class='col-xs-2'>"
+				+ "			<button id='_form_formdestination_submit' name='_form_formdestination_submit' class='btn btn-default' onclick='_form_submitForm()' disabled>Submit</button>"
+				+ "		</div>"
+				+ "		<div class='col-xs-6'>"
+				+ "			<label id='_form_formdestination_location_label' class='_form_formelem_remove control-label'>Destination: </label>"
+				+ "			<span id='_form_formdestination_location' class='_form_formelem_remove'>Click to set form destination</span><br/>"
+				+ "			<label id='_form_formdestination_category_label' class='_form_formelem_remove control-label'>Category: </label>"
+				+ "			<span id='_form_formdestination_category' class='_form_formelem_remove'>-</span><br/>"
+				+ "			<label id='_form_formdestination_tags_label' class='_form_formelem_remove control-label'>Tags: </label>"
+				+ "			<span id='_form_formdestination_tags' class='_form_formelem_remove'>-</span>"
+				+ "			<span id='_form_formdestination_submitURL' style='display: none;'>Y</span>"
+				+ "			<span id='_form_formdestination_URL' style='display: none;'></span>"
+				+ "			<span id='_form_formdestination_ID' style='display: none;'></span>"
+				+ "			<span id='_form_formdestination_submitemail' style='display: none;'>N</span>"
+				+ "			<span id='_form_formdestination_email' style='display: none;'></span>"
+				+ "		</div>"
 				+ "	</div>"
 				+ "	<div id='_form_form_URL_info' style='display:none;'>"
 				+ "		<div id='_form_formcategory' class='form-group'>"
@@ -1161,7 +1170,7 @@ function checkDestination() {
 					$j('#_form_formdestination_URL',editelem).text( formDestinationURL );
 					$j('#_form_formdestination_ID').text( formdestination );
 					$j('#editbox_destination_status').text('Destination updated to ' + formdestinationText);
-					$j('#_form_formdestination_location').text('Destination updated to ' + formdestinationText)
+					$j('#_form_formdestination_location').text(formdestinationText)
 					$j('#_form_submit').removeClass('_form_element_notset');
 					$j('#editbox_destination_input').attr('readonly', false);
 					ret = checkDestinationCategories();
@@ -1275,7 +1284,7 @@ function setCategory() {
  */
 function setCategoryOK() {
 	$j("#editbox_category_set").hide();
-	$j('#editbox_category_set_list option:selected').each(function(index, opt){ 
+	$j('#editbox_category_set_list option:selected').each(function(index, opt){
 		categoryDone( 'set', $j(this).val() );
 	}); 
 }
@@ -1335,17 +1344,22 @@ function categoryDone(type, cat) {
 		$j('#_form_formcategory_value').text('None');
 		$j('#_form_formcategory_type').text( '' );
 		$j('#_form_formcategory_category').text( '' );
+		$j('#_form_formdestination_category').text('-');
 	}
 	checkDestinationTags();
 }
 
 function categoryUpdateLabel(type, category) {
-	if (type == 'set')
+	if (type == 'set') {
 		$j('#_form_formcategory_value').text(category);
-	else if (type == 'single')
+		$j('#_form_formdestination_category').text(category);
+	} else if (type == 'single') {
 		$j('#_form_formcategory_value').text('The user will have to single-select from the available categories on the destination form');
-	else if (type == 'multiple')
+		$j('#_form_formdestination_category').text('Single-Select');
+	} else if (type == 'multiple') {
 		$j('#_form_formcategory_value').text('The user will be able to multi-select from the available categories on the destination form');
+		$j('#_form_formdestination_category').text('Multi-Select');
+	}
 }
 
 function checkDestinationTags() {
@@ -1359,15 +1373,22 @@ function checkDestinationTags() {
  */
 function setTagsDone() {
 	$j( '#editbox_tags' ).hide();
-	$j('#_form_tags').text( $j('#editbox_tags_input' ).val().trim() );
-	if ( $j('#_form_tags').text() == "" )
-		$j('#_form_tags_value').text( 'None' );
-	else
-		$j('#_form_tags_value').text( $j('#_form_tags').text() );
+	tagsUpdateLabel( $j('#editbox_tags_input' ).val().trim() );
 	$j('#editbox_category').hide();
 	$j('#editbox_editframe').show();
 	hideEditBox();
 	check_form_formcontrols_showcode();
+}
+
+function tagsUpdateLabel(tags) {
+	$j('#_form_tags').text( tags );
+	if ( tags == "" ) {
+		$j('#_form_formdestination_tags').text('-');
+		$j('#_form_tags_value').text( 'None' );
+	} else {
+		$j('#_form_formdestination_tags').text(tags);
+		$j('#_form_tags_value').text( tags );
+	}
 }
 
 /*
@@ -2756,11 +2777,7 @@ function _form_loadCode_Load() {
 			_form_load_counters(json.counters);
 			_form_load_destination(json.destination);
 
-			$j('#_form_tags').text( json.tags );
-			if ( $j('#_form_tags').text() == "" )
-				$j('#_form_tags_value').text( 'None' );
-			else
-				$j('#_form_tags_value').text( $j('#_form_tags').text() );
+			tagsUpdateLabel( json.tags );
 
 			$j('#_form_toolbox').show();
 			$j('#_form_toolbox').removeClass('toolbox_background');
