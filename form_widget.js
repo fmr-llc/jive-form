@@ -564,28 +564,36 @@ function _form_submitForm_attachment() {
 		$j(this).attr('disabled', true);
 	});
 
-	if(attachmentCount > 3) {
-		errorMessage += 'You can only attach up to 3 files per form.';
+	/*
+	 * USE THIS BLOCK OF CODE TO SET A LIMIT ON THE NUMBER OF ATTACHMENTS ALLOWED
+	 * UNCOMMENT THE CODE AND SET ### BELOW TO THE MAXIMUM NUMBER OF ATTACHMENTS
+	if(attachmentCount > ###) {
+		errorMessage += 'You can only attach up to ### files per form.';
 		$j('_form_formelem[id="tool_attachment"]').addClass('_form_formelem_error');
 		$j('#_form_formdestination_submit').attr('disabled', false);
 		errorAttachmentCountFound = true;
 	}
+	*/
 
+	/*
+	 * USE THIS BLOCK OF CODE TO SET A LIMIT ON THE SIZE OF ATTACHMENTS
+	 * UNCOMMENT THE CODE AND SET ### BELOW TO THE MAXIMUM SIZE (IN BYTES) OF ATTACHMENTS
 	$j('input[type=file]').each(function() {
 		for(var i = 0; i < this.files.length; i++) {
-			if(this.files[i].size > 8375000) {
+			if(this.files[i].size > ###) {
 				errorsFileFound = true;
 				errorFilesList += this.files[i].name + '\n';
 			}
 		}
 	});
+	*/
 
 	if(errorsFileFound || errorAttachmentCountFound) {
 		if(errorsFileFound) {
 			if(errorAttachmentCountFound) {
-				errorMessage += ' Also, the following files are over the 8 MB limit.\n\n' + errorFilesList;
+				errorMessage += ' Also, the following files are over the size limit.\n\n' + errorFilesList;
 			} else {
-				errorMessage += 'The following files are over the 8 MB limit.\n\n' + errorFilesList;
+				errorMessage += 'The following files are over the size limit.\n\n' + errorFilesList;
 			}
 			errorMessage += '\nPlease check these files and try again.';
 		}

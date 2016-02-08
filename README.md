@@ -183,7 +183,9 @@ Build the Form
 <p><img src="docs/form-widget-destination.jpg" /></p>
   Paste the destination URL in the entry field.  You can optionally set an eail address, but this will only open an email with the form content.  It does not automatically email the form.  Click OK to set the destination.  This will look up the location and determine if any categories are configured there.  If there are, it gives you the option to set how the form submissions will be categorized.  Finaly, you will have the opportunity to set the tags that will be associated with the form submissions.  It is recommended that you set a tag on your forms.  If you are ever going to use the [Form Report widget](https://github.com/fmr-llc/jive-form-report) for this form's submissions, you MUST assign a tag to the form, and it should be unique to the form design to prevent it from confusing other form submissions in the same location.
 * Once you are satisfied with everything on your form, click Save Form to save a copy of the form design.  This will create a document in your personal container with the form name.  The contents will be a JSON description of the form design.  Do not modify this information, or you could invalidate your form design and prevent it from being loaded.  You should save your form design after any modifications to prevent losin the changes.
-* Click Show Code.  This will ask you to select the color of the form submissions.  Once this is selected, the code for the form will be generated.  Copy the form code.
+* Click Show Code.  This will ask you to select the color of the form submissions.  Once this is selected, the code for the form will be generated.
+  <p><img src="docs/form-widget-code.jpg" /></p>
+  Copy the form code.
 * Go to the overview page you want to put the Form.
 * Drag an HTML Widget into medium or wide column.
 * Edit the widget and paste the form code.
