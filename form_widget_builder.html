@@ -246,7 +246,13 @@ $j.load_library('form_widget_builder.js');
  				<div class="form-group">
  					<label id="tool_label" class="col-xs-3 control-label">Attachment</label>
  					<div class="col-xs-9">
- 						<div style="padding: 5px;margin-top: 3px;margin-bottom: 10px;"><div class="color:#fff;">Maximum size: 8 MB | Maximum attachments allowed: 3</div></div>
+ 						<div style="padding: 5px;margin-top: 3px;margin-bottom: 10px;">
+ 							<div class="color:#fff;">
+ 								<!-- put limit text here like:
+ 								Maximum size: 8 MB | Maximum attachments allowed: 3 
+ 								-->
+ 							</div> 
+ 						</div>
  						<input id="tool_attachment_input" class="form-control" name="textinput" type="file" multiple="">
  					</div>
  				</div>
@@ -516,6 +522,8 @@ $j.load_library('form_widget_builder.js');
 
 				<div id="editbox_category_singleormultiple" class="control-group text-center" style="display:none;">
 					<label>Do you want category selection to be single select or multiple select?</label>
+					</br>
+					<label title="Category must be selected prior to submission.">Required&nbsp;<input id="category_required_checkbox" type="checkbox" value="Required"></label>
 					</br>
 					<button id="editbox_category_singleormultiple_single" name="editbox_category_singleormultiple_single" class="btn btn-default _form_formcontrols_button" onclick="singleCategory()">Single</button>
 					<button id="editbox_category_singleormultiple_multiple" name="editbox_category_singleormultiple_multiple" class="btn btn-default _form_formcontrols_button" onclick="multipleCategory()">Multiple</button>

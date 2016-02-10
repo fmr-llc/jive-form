@@ -45,7 +45,7 @@ var blankDesign = "<div id='_form_formname' class='_form_formheader _form_elemen
 				+ "		</div>"
 				+ "		<div class='tool_set_as_title form-group' style='display:none;'>"
 				+ "			<label class='col-xs-3 control-label'></label>"
-				+ "			<label class='col-xs-9'>Set as title&nbsp;<input id='tool_set_as_title_checkbox' type='checkbox' value='Yes' checked></label>"
+				+ "			<span id='set_as_title' style='display: none;'>No</span>"
 				+ "		</div>"
 				+ "	</div>"
 				+ "</div>"
@@ -92,6 +92,7 @@ var blankDesign = "<div id='_form_formname' class='_form_formheader _form_elemen
 				+ "			<label id='_form_formcategory_value' class='col-xs-9 _form_formelem_remove'>Not Set</label>"
 				+ "			<label id='_form_formcategory_type' style='display:none;'></label>"
 				+ "			<label id='_form_formcategory_category' style='display:none;'></label>"
+				+ "			<label id='_form_formcategory_required' style='display:none;'>N</label>"
 				+ "			<label id='_form_email_label' class='col-xs-3 control-label _form_formelem_remove'>Email:</label>"
 				+ "			<label id='_form_email_value' class='col-xs-9'></label>"
 				+ "		</div>"
@@ -109,15 +110,14 @@ var blankDesign = "<div id='_form_formname' class='_form_formheader _form_elemen
 				+ "	<button id='_form_formcontrols_showcode' name='_form_formcontrols_showcode' class='btn btn-default _form_formcontrols_button' onclick='_form_select_color();' disabled>Show Code</button>"
 				+ "	<button id='_form_formcontrols_startover' name='_form_formcontrols_startover' class='btn btn-default _form_formcontrols_button' onclick='_form_startOver();'>Start Over</button>"
 				+ "</div>";
-
 var toolRequired= "	<div class='tool_required form-group' style='display:none;'>"
 				+ "		<label class='col-xs-3 control-label'></label>"
-				+ "		<label class='col-xs-9'>Required&nbsp;<input id='tool_required_checkbox' type='checkbox' value='Required'></label>"
+				+ "		<span id='tool_is_required' style='display: none;'>No</span>"
 				+ "	</div>";
 
 var toolSetAsTitle= " <div class='tool_set_as_title form-group' style='display:none;'>"
 				+ "		<label class='col-xs-3 control-label'></label>"
-				+ "		<label class='col-xs-9'>Set as title&nbsp;<input id='tool_set_as_title_checkbox' type='checkbox' value='Yes'></label>"
+				+ "		<span id='set_as_title' style='display: none;'>No</span>"
 				+ "		<span title='All documents must have a unique name. When your form is posted, it will use this as the name of the form and append the timestamp it was created to make the name unique.'>?</span>"
 				+ "	</div>";
 
@@ -204,7 +204,7 @@ function formNameEdit() {
 	} else {
 		$j('#editbox_formname_input').val('');
 	}
-	if ( $j('#tool_set_as_title_checkbox', editelem).prop('checked') ) {
+	if ( $j('#set_as_title', editelem).text() == 'Yes' ) {
 		clearSetAsTitle();
 		$j('#editbox_formname_set_as_title_checkbox').prop('checked', true);
 		$j('#editbox_formname_set_as_title_checkbox').prop('disabled',true);
@@ -304,7 +304,7 @@ function formPersonSelectorEdit() {
 		$j('#editbox_person_options_phone').prop('checked', false);
 	}
 	$j('#editbox_person_required').show();
-	if ( $j('#tool_required_checkbox', editelem).prop('checked') ) {
+	if ( $j('#tool_is_required', editelem).text() == 'Yes' ) {
 		$j('#editbox_person_required_checkbox').prop('checked', true);
 	} else {
 		$j('#editbox_person_required_checkbox').prop('checked', false);
@@ -340,7 +340,7 @@ function formInputEdit() {
 	//$j('#editbox_input_id').val( $j('#tool_id',editelem).text() );
 	$j('#editbox_input_label').val( $j('#tool_label',editelem).text() );
 	$j('#editbox_input_placeholder').val( $j('#tool_input_input',editelem).attr('placeholder') );
-	if ( $j('#tool_set_as_title_checkbox', editelem).prop('checked') ) {
+	if ( $j('#set_as_title', editelem).text() == 'Yes' ) {
 		$j('#editbox_input_set_as_title_checkbox').prop('checked', true);
 		$j('#editbox_input_set_as_title_checkbox').prop('disabled',true);
 		$j('#editbox_input_required_checkbox').prop('checked', true);
@@ -349,7 +349,7 @@ function formInputEdit() {
 		$j('#editbox_input_set_as_title_checkbox').prop('checked', false);
 		$j('#editbox_input_set_as_title_checkbox').prop('disabled',false);
 		$j('#editbox_input_required_checkbox').prop('disabled',false);
-		if ( $j('#tool_required_checkbox', editelem).prop('checked') ) {
+		if ( $j('#tool_is_required', editelem).text() == 'Yes' ) {
 			$j('#editbox_input_required_checkbox').prop('checked', true);
 		} else {
 			$j('#editbox_input_required_checkbox').prop('checked', false);
@@ -368,7 +368,7 @@ function formTextAreaEdit() {
 	//$j('#editbox_input_id').val( $j('#tool_id',editelem).text() );
 	$j('#editbox_input_label').val( $j('#tool_label',editelem).text() );
 	$j('#editbox_input_placeholder').val( $j('#tool_textarea_textarea',editelem).attr('placeholder') );
-	if ( $j('#tool_required_checkbox', editelem).prop('checked') ) {
+	if ( $j('#tool_is_required', editelem).text() == 'Yes' ) {
 		$j('#editbox_input_required_checkbox').prop('checked', true);
 	} else {
 		$j('#editbox_input_required_checkbox').prop('checked', false);
@@ -387,7 +387,7 @@ function formRadioEdit() {
 	$j('#editbox_options_label').val( $j('#tool_label',editelem).text() );
 	$j('#editbox_options_options').val( $j('#tool_radio_option_text',editelem).text() );
  	$j('#editbox_options_optionlist').show();
-	if ( $j('#tool_set_as_title_checkbox', editelem).prop('checked') ) {
+	if ( $j('#set_as_title', editelem).text() == 'Yes' ) {
 		$j('#editbox_options_set_as_title_checkbox').prop('checked', true);
 		$j('#editbox_options_set_as_title_checkbox').prop('disabled',true);
 		$j('#editbox_options_required_checkbox').prop('checked', true);
@@ -396,7 +396,7 @@ function formRadioEdit() {
 		$j('#editbox_options_set_as_title_checkbox').prop('checked', false);
 		$j('#editbox_options_set_as_title_checkbox').prop('disabled',false);
 		$j('#editbox_options_required_checkbox').prop('disabled',false);
-		if ( $j('#tool_required_checkbox', editelem).prop('checked') ) {
+		if ( $j('#tool_is_required', editelem).text() == 'Yes' ) {
 			$j('#editbox_options_required_checkbox').prop('checked', true);
 		} else {
 			$j('#editbox_options_required_checkbox').prop('checked', false);
@@ -416,7 +416,7 @@ function formCheckboxEdit() {
 	$j('#editbox_options_label').val( $j('#tool_label',editelem).text() );
 	$j('#editbox_options_options').val( $j('#tool_checkbox_option_text',editelem).text() );
  	$j('#editbox_options_optionlist').show();
-	if ( $j('#tool_required_checkbox', editelem).prop('checked') ) {
+	if ( $j('#tool_is_required', editelem).text() == 'Yes' ) {
 		$j('#editbox_options_required_checkbox').prop('checked', true);
 	} else {
 		$j('#editbox_options_required_checkbox').prop('checked', false);
@@ -435,7 +435,7 @@ function formSingleSelectEdit() {
 	$j('#editbox_options_label').val( $j('#tool_label',editelem).text() );
 	$j('#editbox_options_options').val( $j('#tool_singleselect_option_text',editelem).text() );
  	$j('#editbox_options_optionlist').show();
-	if ( $j('#tool_set_as_title_checkbox', editelem).prop('checked') ) {
+	if ( $j('#set_as_title', editelem).text() == 'Yes' ) {
 		$j('#editbox_options_set_as_title_checkbox').prop('checked', true);
 		$j('#editbox_options_set_as_title_checkbox').prop('disabled',true);
 		$j('#editbox_options_required_checkbox').prop('checked', true);
@@ -444,7 +444,7 @@ function formSingleSelectEdit() {
 		$j('#editbox_options_set_as_title_checkbox').prop('checked', false);
 		$j('#editbox_options_set_as_title_checkbox').prop('disabled',false);
 		$j('#editbox_options_required_checkbox').prop('disabled',false);
-		if ( $j('#tool_required_checkbox', editelem).prop('checked') ) {
+		if ( $j('#tool_is_required', editelem).text() == 'Yes' ) {
 			$j('#editbox_options_required_checkbox').prop('checked', true);
 		} else {
 			$j('#editbox_options_required_checkbox').prop('checked', false);
@@ -464,7 +464,7 @@ function formMultiSelectEdit() {
 	$j('#editbox_options_label').val( $j('#tool_label',editelem).text() );
 	$j('#editbox_options_options').val( $j('#tool_multiselect_option_text',editelem).text() );
  	$j('#editbox_options_optionlist').show();
-	if ( $j('#tool_required_checkbox', editelem).prop('checked') ) {
+	if ( $j('#tool_is_required', editelem).text() == 'Yes' ) {
 		$j('#editbox_options_required_checkbox').prop('checked', true);
 	} else {
 		$j('#editbox_options_required_checkbox').prop('checked', false);
@@ -488,7 +488,7 @@ function formDateEdit() {
 		$j('#editbox_date_option_entry').prop('checked', true);
 		$j('#editbox_date_required').show();
 	}
-	if ( $j('#tool_required_checkbox', editelem).prop('checked') ) {
+	if ( $j('#tool_is_required', editelem).text() == 'Yes' ) {
 		$j('#editbox_date_required_checkbox').prop('checked', true);
 	} else {
 		$j('#editbox_date_required_checkbox').prop('checked', false);
@@ -524,7 +524,7 @@ function formDateEdit() {
  	$j('#editbox_options_id').val( $j('#tool_id',editelem).text() );
  	$j('#editbox_options_label').val( $j('#tool_label',editelem).text() );
  	$j('#editbox_options_optionlist').hide();
-	if ( $j('#tool_set_as_title_checkbox', editelem).prop('checked') ) {
+	if ( $j('#set_as_title', editelem).text() == 'Yes' ) {
 		$j('#editbox_options_set_as_title_checkbox').prop('checked', true);
 		$j('#editbox_options_set_as_title_checkbox').prop('disabled',true);
 		$j('#editbox_options_required_checkbox').prop('checked', true);
@@ -532,7 +532,7 @@ function formDateEdit() {
 	} else {
 		$j('#editbox_options_set_as_title_checkbox').prop('checked', false);
 		$j('#editbox_options_set_as_title_checkbox').prop('disabled',false);
-		if ( $j('#tool_required_checkbox', editelem).prop('checked') ) {
+		if ( $j('#tool_is_required', editelem).text() == 'Yes' ) {
 			$j('#editbox_options_required_checkbox').prop('checked', true);
 		} else {
 			$j('#editbox_options_required_checkbox').prop('checked', false);
@@ -697,9 +697,9 @@ function formNameUpdate() {
 	$j('#_form_formname_text').text(formname);
 	if ( $j('#editbox_formname_set_as_title_checkbox').prop('checked') ) {
 		clearSetAsTitle();
-		$j('#tool_set_as_title_checkbox', editelem).prop('checked', true);
+		$j('#set_as_title', editelem).text('Yes');
 	} else {
-		$j('#tool_set_as_title_checkbox', editelem).prop('checked', false);
+		$j('#set_as_title', editelem).text('No');
 	}
 }
 
@@ -799,7 +799,6 @@ function formPersonSelectorUpdate() {
 		return false;
 	}
 
-	//$j('#tool_id',editelem).text( $j('#editbox_person_selector_id').val() );
 	$j('#tool_personselector_search_label',editelem).text( $j('#editbox_person_selector_label').val() );
 	$j('#tool_personselector_search_input',editelem).attr('placeholder', $j('#editbox_person_selector_placeholder').val() );
 	$j('#tool_personselector_heading_label', editelem).text( $j('#editbox_person_heading').val() );
@@ -865,9 +864,12 @@ function formPersonSelectorUpdate() {
 		$j('#tool_personselector_phone', editelem).addClass('_form_formelem_remove');
 	}
 	if ( $j('#editbox_person_required_checkbox').prop('checked') ) {
-		$j('#tool_required_checkbox', editelem).prop('checked', true);
+		$j('#tool_is_required', editelem).text('Yes');
+		$j('#tool_personselector_search_label', editelem).addClass('tool_is_required');
 	} else {
-		$j('#tool_required_checkbox', editelem).prop('checked', false);
+		$j('#tool_is_required', editelem).text('No');
+		$j('#tool_personselector_search_label', editelem).removeClass('tool_is_required');
+
 	}
 	$j(editelem).removeClass('_form_element_notset');
 	return true;
@@ -895,19 +897,20 @@ function formTextBlockUpdate() {
  * Copy the input edit frame information into the input tool.
  */
 function formInputUpdate() {
-	//$j('#tool_id',editelem).text( $j('#editbox_input_id').val() );
 	$j('#tool_label',editelem).text( $j('#editbox_input_label').val() );
 	$j('#tool_input_input',editelem).attr('placeholder', $j('#editbox_input_placeholder').val() );
 	if ( $j('#editbox_input_set_as_title_checkbox').prop('checked') ) {
 		clearSetAsTitle();
-		$j('#tool_set_as_title_checkbox', editelem).prop('checked', true);
+		$j('#set_as_title', editelem).text('Yes');
 	} else {
-		$j('#tool_set_as_title_checkbox', editelem).prop('checked', false);
+		$j('#set_as_title', editelem).text('No');
 	}
 	if ( $j('#editbox_input_required_checkbox').prop('checked') ) {
-		$j('#tool_required_checkbox', editelem).prop('checked', true);
+		$j('#tool_is_required', editelem).text('Yes');
+		$j('#tool_label', editelem).addClass('tool_is_required');
 	} else {
-		$j('#tool_required_checkbox', editelem).prop('checked', false);
+		$j('#tool_is_required', editelem).text('No');
+		$j('#tool_label', editelem).removeClass('tool_is_required');
 	}
 	$j(editelem).removeClass('_form_element_notset');
 }
@@ -916,13 +919,14 @@ function formInputUpdate() {
  * Copy the text area edit frame information into the text area tool.
  */
 function formTextAreaUpdate() {
-	//$j('#tool_id',editelem).text( $j('#editbox_input_id').val() );
 	$j('#tool_label',editelem).text( $j('#editbox_input_label').val() );
 	$j('#tool_textarea_textarea',editelem).attr('placeholder', $j('#editbox_input_placeholder').val() );
 	if ( $j('#editbox_input_required_checkbox').prop('checked') ) {
-		$j('#tool_required_checkbox', editelem).prop('checked', true);
+		$j('#tool_is_required', editelem).text('Yes');
+		$j('#tool_label', editelem).addClass('tool_is_required');
 	} else {
-		$j('#tool_required_checkbox', editelem).prop('checked', false);
+		$j('#tool_is_required', editelem).text('No');
+		$j('#tool_label', editelem).removeClass('tool_is_required');
 	}
 	$j(editelem).removeClass('_form_element_notset');
 }
@@ -931,7 +935,6 @@ function formTextAreaUpdate() {
  * Copy the radio button edit frame information into the radio button tool.
  */
 function formRadioUpdate() {
-	//$j('#tool_id',editelem).text( $j('#editbox_options_id').val() );
 	$j('#tool_label',editelem).text( $j('#editbox_options_label').val() );
 	$j('#tool_radio_option_text',editelem).text( $j('#editbox_options_options').val() );
 	var opts = "";
@@ -942,14 +945,16 @@ function formRadioUpdate() {
 	$j('#tool_radio_options',editelem).html(opts);
 	if ( $j('#editbox_options_set_as_title_checkbox').prop('checked') ) {
 		clearSetAsTitle();
-		$j('#tool_set_as_title_checkbox', editelem).prop('checked', true);
+		$j('#set_as_title', editelem).text('Yes');
 	} else {
-		$j('#tool_set_as_title_checkbox', editelem).prop('checked', false);
+		$j('#set_as_title', editelem).text('No');
 	}
 	if ( $j('#editbox_options_required_checkbox').prop('checked') ) {
-		$j('#tool_required_checkbox', editelem).prop('checked', true);
+		$j('#tool_is_required', editelem).text('Yes');
+		$j('#tool_label', editelem).addClass('tool_is_required');
 	} else {
-		$j('#tool_required_checkbox', editelem).prop('checked', false);
+		$j('#tool_is_required', editelem).text('No');
+		$j('#tool_label', editelem).removeClass('tool_is_required');
 	}
 	$j(editelem).removeClass('_form_element_notset');
 }
@@ -958,7 +963,6 @@ function formRadioUpdate() {
  * Copy the checkbox edit frame information into the checkbox tool.
  */
 function formCheckboxUpdate() {
-	//$j('#tool_id',editelem).text( $j('#editbox_options_id').val() );
 	$j('#tool_label',editelem).text( $j('#editbox_options_label').val() );
 	$j('#tool_checkbox_option_text',editelem).text( $j('#editbox_options_options').val() );
 	var opts = "";
@@ -968,9 +972,11 @@ function formCheckboxUpdate() {
 	});
 	$j('#tool_checkbox_options',editelem).html(opts);
 	if ( $j('#editbox_options_required_checkbox').prop('checked') ) {
-		$j('#tool_required_checkbox', editelem).prop('checked', true);
+		$j('#tool_is_required', editelem).text('Yes');
+		$j('#tool_label', editelem).addClass('tool_is_required');
 	} else {
-		$j('#tool_required_checkbox', editelem).prop('checked', false);
+		$j('#tool_is_required', editelem).text('No');
+		$j('#tool_label', editelem).removeClass('tool_is_required');
 	}
 	$j(editelem).removeClass('_form_element_notset');
 }
@@ -979,7 +985,6 @@ function formCheckboxUpdate() {
  * Copy the single-select edit frame information into the single-select tool.
  */
 function formSingleSelectUpdate() {
-	//$j('#tool_id',editelem).text( $j('#editbox_options_id').val() );
 	$j('#tool_label',editelem).text( $j('#editbox_options_label').val() );
 	$j('#tool_singleselect_option_text',editelem).text( $j('#editbox_options_options').val() );
 	var opts = "";
@@ -990,14 +995,16 @@ function formSingleSelectUpdate() {
 	$j('#tool_singleselect_options',editelem).html(opts);
 	if ( $j('#editbox_options_set_as_title_checkbox').prop('checked') ) {
 		clearSetAsTitle();
-		$j('#tool_set_as_title_checkbox', editelem).prop('checked', true);
+		$j('#set_as_title', editelem).text('Yes');
 	} else {
-		$j('#tool_set_as_title_checkbox', editelem).prop('checked', false);
+		$j('#set_as_title', editelem).text('No');
 	}
 	if ( $j('#editbox_options_required_checkbox').prop('checked') ) {
-		$j('#tool_required_checkbox', editelem).prop('checked', true);
+		$j('#tool_is_required', editelem).text('Yes');
+		$j('#tool_label', editelem).addClass('tool_is_required');
 	} else {
-		$j('#tool_required_checkbox', editelem).prop('checked', false);
+		$j('#tool_is_required', editelem).text('No');
+		$j('#tool_label', editelem).removeClass('tool_is_required');
 	}
 	$j(editelem).removeClass('_form_element_notset');
 }
@@ -1006,7 +1013,6 @@ function formSingleSelectUpdate() {
  * Copy the multi-select edit frame information into the multi-select tool.
  */
 function formMultiSelectUpdate() {
-	//$j('#tool_id',editelem).text( $j('#editbox_options_id').val() );
 	$j('#tool_label',editelem).text( $j('#editbox_options_label').val() );
 	$j('#tool_multiselect_option_text',editelem).text( $j('#editbox_options_options').val() );
 	var opts = "";
@@ -1016,9 +1022,11 @@ function formMultiSelectUpdate() {
 	});
 	$j('#tool_multiselect_options',editelem).html(opts);
 	if ( $j('#editbox_options_required_checkbox').prop('checked') ) {
-		$j('#tool_required_checkbox', editelem).prop('checked', true);
+		$j('#tool_is_required', editelem).text('Yes');
+		$j('#tool_label', editelem).addClass('tool_is_required');
 	} else {
-		$j('#tool_required_checkbox', editelem).prop('checked', false);
+		$j('#tool_is_required', editelem).text('No');
+		$j('#tool_label', editelem).removeClass('tool_is_required');
 	}
 	$j(editelem).removeClass('_form_element_notset');
 }
@@ -1027,7 +1035,6 @@ function formMultiSelectUpdate() {
  * Copy the date edit frame information into the date tool.
  */
 function formDateUpdate() {
-	//$j('#tool_id',editelem).text( $j('#editbox_date_id_input').val() );
 	$j('#tool_label',editelem).text( $j('#editbox_date_label_input').val() );
 	if ( $j('#editbox_date_option_current').prop('checked') ) {
 		$j('#tool_date_type', editelem).text('current');
@@ -1039,9 +1046,11 @@ function formDateUpdate() {
 		$j('.tool_date_input', editelem).removeClass('tool_data');
 	}
 	if ( $j('#editbox_date_required_checkbox').prop('checked') ) {
-		$j('#tool_required_checkbox', editelem).prop('checked', true);
+		$j('#tool_is_required', editelem).text('Yes');
+		$j('#tool_label', editelem).addClass('tool_is_required');
 	} else {
-		$j('#tool_required_checkbox', editelem).prop('checked', false);
+		$j('#tool_is_required', editelem).text('No');
+		$j('#tool_label', editelem).removeClass('tool_is_required');
 	}
 	$j(editelem).removeClass('_form_element_notset');
 }
@@ -1051,20 +1060,21 @@ function formDateUpdate() {
  * [ab]
  */
  function formAttachmentUpdate() {
- 	//$j('#tool_id',editelem).text( $j('#editbox_options_id').val() );
  	$j('#tool_label',editelem).text( $j('#editbox_options_label').val() );
 
 	if ( $j('#editbox_options_set_as_title_checkbox').prop('checked') ) {
 		clearSetAsTitle();
-		$j('#tool_set_as_title_checkbox', editelem).prop('checked', true);
+		$j('#set_as_title', editelem).text('Yes');
 	} else {
-		$j('#tool_set_as_title_checkbox', editelem).prop('checked', false);
+		$j('#set_as_title', editelem).text('No');
 	}
 
  	if ( $j('#editbox_options_required_checkbox').prop('checked') ) {
- 		$j('#tool_required_checkbox', editelem).prop('checked', true);
- 	} else {
- 		$j('#tool_required_checkbox', editelem).prop('checked', false);
+		$j('#tool_is_required', editelem).text('Yes');
+		$j('#tool_label', editelem).addClass('tool_is_required');
+	} else {
+		$j('#tool_is_required', editelem).text('No');
+		$j('#tool_label', editelem).removeClass('tool_is_required');
  	}
  	$j(editelem).removeClass('_form_element_notset');
  }	 
@@ -1096,27 +1106,12 @@ function formDestinationUpdate() {
 	} else {
 		$j('#_form_formdestination_submitemail').text('N');
 	}
-/*
-	if ( $j('#editbox_destination_submitrefresh').prop('checked') ) {
-		$j('#_form_formdestination_submitrefresh', editelem).text('Y');
-	} else {
-		$j('#_form_formdestination_submitrefresh', editelem).text('N');
-	}
-*/
 
 	$j('#_form_formdestination_location').show();
 
 	if ( ! checkDestination() ) {
 		return false;
 	}
-/*
-	} else {
-		$j('#_form_formdestination_ID').text('');
-		$j('#_form_formdestination_location').hide();
-		$j('#_form_form_URL_info').hide();
-		hideEditBox();
-	}
-*/
 }
 
 /*
@@ -1259,7 +1254,7 @@ function enableCategory() {
  */
 function removeCategory() {
 	$j( "#editbox_category_enable" ).hide();
-	categoryDone( '', '' );
+	categoryDone( '', '', false );
 }
 
 /*
@@ -1285,7 +1280,7 @@ function setCategory() {
 function setCategoryOK() {
 	$j("#editbox_category_set").hide();
 	$j('#editbox_category_set_list option:selected').each(function(index, opt){
-		categoryDone( 'set', $j(this).val() );
+		categoryDone( 'set', $j(this).val(), false );
 	}); 
 }
 
@@ -1305,6 +1300,12 @@ function selectCategory() {
 	$j( "#editbox_category_setorselect" ).hide();
 	formEditReposition();
 	$j( "#editbox_category_singleormultiple" ).show();
+	if ( $j('#_form_formcategory_required').text() == 'Y' ) {
+		$j('#category_required_checkbox').prop('checked', true);
+	} else {
+		$j('#category_required_checkbox').prop('checked', false);
+	}
+
 }
 
 /*
@@ -1312,7 +1313,7 @@ function selectCategory() {
  */
 function singleCategory() {
 	$j( "#editbox_category_singleormultiple" ).hide();
-	categoryDone( 'single', '' );
+	categoryDone( 'single', '', $j('#category_required_checkbox').prop('checked') );
 }
 
 /*
@@ -1320,7 +1321,7 @@ function singleCategory() {
  */
 function multipleCategory() {
 	$j( "#editbox_category_singleormultiple" ).hide();
-	categoryDone( 'multiple', '' );
+	categoryDone( 'multiple', '', $j('#category_required_checkbox').prop('checked') );
 }
 
 /*
@@ -1335,15 +1336,21 @@ function singleOrMultipleCategoryCancel() {
 /*
  * Copy the category information into the destination tool.
  */
-function categoryDone(type, cat) {
+function categoryDone(type, cat, req) {
 	if (type != "" ) {
 		$j('#_form_formcategory_type').text( type );
 		$j('#_form_formcategory_category').text( cat );
+		if (req == true) {
+			$j('#_form_formcategory_required').text( 'Y' );
+		} else {
+			$j('#_form_formcategory_required').text( 'N' );
+		}
 		categoryUpdateLabel(type, cat);
 	} else {
 		$j('#_form_formcategory_value').text('None');
 		$j('#_form_formcategory_type').text( '' );
 		$j('#_form_formcategory_category').text( '' );
+		$j('#_form_formcategory_required').text( 'N' );
 		$j('#_form_formdestination_category').text('-');
 	}
 	checkDestinationTags();
@@ -1449,8 +1456,8 @@ function check_form_formcontrols_showcode() {
 }
 
 function clearSetAsTitle() {
-	$j.each($j('#_form_form #tool_set_as_title_checkbox'), function( index, elem ) {
-		$j(elem).prop('checked', false);
+	$j.each($j('#_form_form #set_as_title'), function( index, elem ) {
+		$j(elem).text('No');
 	});
 }
 
@@ -1569,7 +1576,7 @@ function _form_save_personselector(personselector) {
 		personselector_code += "N";
 	}
 	personselector_code += '", "required":"';
-	if ( $j('#tool_required_checkbox', personselector).prop('checked') ) {
+	if ( $j('#tool_is_required', personselector).text() == 'Yes' ) {
 		personselector_code += "Y";
 	} else {
 		personselector_code += "N";
@@ -1616,13 +1623,13 @@ function _form_save_input(input) {
 					+ ' "label":"' + $j('#tool_label',input).text() + '",'
 					+ ' "placeholder":"' + $j('#tool_input_input',input).attr('placeholder') + '",'
 					+ ' "settitle":"';
-	if ( $j('#tool_set_as_title_checkbox', input).prop('checked') ) {
+	if ( $j('#set_as_title', input).text() == 'Yes' ) {
 		input_code += "Y";
 	} else {
 		input_code += "N";
 	}
 	input_code += '", "required":"';
-	if ( $j('#tool_required_checkbox', input).prop('checked') ) {
+	if ( $j('#tool_is_required', input).text() == 'Yes' ) {
 		input_code += "Y";
 	} else {
 		input_code += "N";
@@ -1646,7 +1653,7 @@ function _form_save_textarea(textarea) {
 						+ ' "label":"' + $j('#tool_label',textarea).text() + '",'
 						+ ' "placeholder":"' + $j('#tool_textarea_textarea',textarea).attr('placeholder') + '",'
 						+ ' "required":"';
-	if ( $j('#tool_required_checkbox', textarea).prop('checked') ) {
+	if ( $j('#tool_is_required', textarea).text() == 'Yes' ) {
 		textarea_code += "Y";
 	} else {
 		textarea_code += "N";
@@ -1680,13 +1687,13 @@ function _form_save_radio(radio) {
 			radio_code += '{ "id":"' + $j('#tool_id',radio).text() + '-' + index + '", "value":"' + value + '" }';
 	});
 	radio_code += '], "required":"';
-	if ( $j('#tool_required_checkbox', radio).prop('checked') ) {
+	if ( $j('#tool_is_required', radio).text() == 'Yes' ) {
 		radio_code += "Y";
 	} else {
 		radio_code += "N";
 	}
 	radio_code += '", "settitle":"';
-	if ( $j('#tool_set_as_title_checkbox', radio).prop('checked') ) {
+	if ( $j('#set_as_title', radio).text() == 'Yes' ) {
 		radio_code += "Y";
 	} else {
 		radio_code += "N";
@@ -1720,7 +1727,7 @@ function _form_save_checkbox(checkbox) {
 			checkbox_code += '{ "id":"' + $j('#tool_id',checkbox).text() + '-' + index + '", "value":"' + value + '" }';
 	});
 	checkbox_code += '], "required":"';
-	if ( $j('#tool_required_checkbox', checkbox).prop('checked') ) {
+	if ( $j('#tool_is_required', checkbox).text() == 'Yes' ) {
 		checkbox_code += "Y";
 	} else {
 		checkbox_code += "N";
@@ -1754,13 +1761,13 @@ function _form_save_singleselect(singleselect) {
 			singleselect_code += '{ "id":"' + $j('#tool_id',singleselect).text() + '-' + index + '", "value":"' + value + '" }';
 	});
 	singleselect_code += '], "required":"';
-	if ( $j('#tool_required_checkbox', singleselect).prop('checked') ) {
+	if ( $j('#tool_is_required', singleselect).text() == 'Yes' ) {
 		singleselect_code += "Y";
 	} else {
 		singleselect_code += "N";
 	}
 	singleselect_code += '", "settitle":"';
-	if ( $j('#tool_set_as_title_checkbox', singleselect).prop('checked') ) {
+	if ( $j('#set_as_title', singleselect).text() == 'Yes' ) {
 		singleselect_code += "Y";
 	} else {
 		singleselect_code += "N";
@@ -1794,7 +1801,7 @@ function _form_save_multiselect(multiselect) {
 			multiselect_code += '{ "id":"' + $j('#tool_id',multiselect).text() + '-' + index + '", "value":"' + value + '" }';
 	});
 	multiselect_code += '], "required":"';
-	if (  $j('#tool_required_checkbox', multiselect).prop('checked') ) {
+	if (  $j('#tool_is_required', multiselect).text() == 'Yes' ) {
 		multiselect_code += "Y";
 	} else {
 		multiselect_code += "N";
@@ -1818,7 +1825,7 @@ function _form_save_date(date) {
 					+ ' "label":"' + $j('#tool_label',date).text() + '",'
 					+ ' "date_type":"' + $j('#tool_date_type', date).text() + '",'
 					+ ' "required":"';
-	if (  $j('#tool_required_checkbox', date).prop('checked') ) {
+	if (  $j('#tool_is_required', date).text() == 'Yes' ) {
 		date_code += "Y";
 	} else {
 		date_code += "N";
@@ -1842,13 +1849,13 @@ function _form_save_date(date) {
 					 	+ ' "id":"' + $j('#tool_id',attachment).text()
 					 	+ '", "label":"' + $j('#tool_label',attachment).text()
 						+ '", "settitle":"';
-	if ( $j('#tool_set_as_title_checkbox', attachment).prop('checked') ) {
+	if ( $j('#set_as_title', attachment).text() == 'Yes' ) {
 		attachment_code += "Y";
 	} else {
 		attachment_code += "N";
 	}
  	attachment_code	+= '", "required":"';
- 	if ( $j('#tool_required_checkbox', attachment).prop('checked') ) {
+ 	if ( $j('#tool_is_required', attachment).text() == 'Yes' ) {
  		attachment_code += "Y";
  	} else {
  		attachment_code += "N";
@@ -1958,7 +1965,7 @@ function _form_saveCode() {
 	// Format the code for the name.
 	var form_code	= '{ "form_name":"' + $j('#_form_form #_form_formname_text').text() + '",'
 					+ ' "form_name_title":"';
-	if ( $j('#_form_form #tool_set_as_title_checkbox').prop('checked') ) {
+	if ( $j('#_form_form #set_as_title').text() == 'Yes' ) {
 		form_code += "Y";
 	} else {
 		form_code += "N";
@@ -2025,6 +2032,7 @@ function _form_saveCode() {
 				+ ' "location":"' + $j('#_form_form #_form_formdestination_location').text() + '",'
 				+ ' "category_type":"' + $j('#_form_form #_form_formcategory_type').text() + '",'
 				+ ' "category_cat":"' + $j('#_form_form #_form_formcategory_category').text() + '",'
+				+ ' "category_req":"' + $j('#_form_form #_form_formcategory_required').text() + '",'
 				+ ' "color":"' + $j('#_form_form #_form_submit #_form_color_scheme').text() + '",'
 				+ ' "submitemail":"';
 	if ($j('#editbox_destination_email_chk').prop('checked')) {
@@ -2320,9 +2328,11 @@ function _form_load_personselector(personselector) {
 		$j('#tool_personselector_phone', newelem).addClass('_form_formelem_remove');
 	}
 	if ( personselector.required == "Y" ) {
-		$j('#tool_required_checkbox', newelem).prop('checked', true);
+		$j('#tool_is_required', newelem).text('Yes');
+		$j('#tool_label', newelem).addClass('tool_is_required');
 	} else {
-		$j('#tool_required_checkbox', newelem).prop('checked', false);
+		$j('#tool_is_required', newelem).text('No');
+		$j('#tool_label', newelem).removeClass('tool_is_required');
 	}
 }
 /*
@@ -2376,14 +2386,17 @@ function _form_load_input(input) {
 	$j('#tool_label',newelem).text( input.label );
 	$j('#tool_input_input',newelem).attr('placeholder', input.placeholder );
 	if ( input.settitle == "Y" ) {
-		$j('#tool_set_as_title_checkbox', newelem).prop('checked', true);
-		$j('#tool_required_checkbox', newelem).prop('checked', true);
+		$j('#set_as_title', newelem).text('Yes');
+		$j('#tool_is_required', newelem).text('Yes');
+		$j('#tool_label', newelem).addClass('tool_is_required');
 	} else {
-		$j('#tool_set_as_title_checkbox', newelem).prop('checked', false);
+		$j('#set_as_title', newelem).text('No');
 		if ( input.required == "Y" ) {
-			$j('#tool_required_checkbox', newelem).prop('checked', true);
+			$j('#tool_is_required', newelem).text('Yes');
+			$j('#tool_label', newelem).addClass('tool_is_required');
 		} else {
-			$j('#tool_required_checkbox', newelem).prop('checked', false);
+			$j('#tool_is_required', newelem).text('No');
+			$j('#tool_label', newelem).removeClass('tool_is_required');
 		}
 	}
 }
@@ -2410,9 +2423,11 @@ function _form_load_textarea(textarea) {
 	$j('#tool_label',newelem).text( textarea.label );
 	$j('#tool_textarea_textarea',newelem).attr('placeholder', textarea.placeholder );
 	if ( textarea.required == "Y" ) {
-		$j('#tool_required_checkbox', newelem).prop('checked', true);
+		$j('#tool_is_required', newelem).text('Yes');
+		$j('#tool_label', newelem).addClass('tool_is_required');
 	} else {
-		$j('#tool_required_checkbox', newelem).prop('checked', false);
+		$j('#tool_is_required', newelem).text('No');
+		$j('#tool_label', newelem).removeClass('tool_is_required');
 	}
 }
 
@@ -2452,14 +2467,17 @@ function _form_load_radio(radio) {
 	$j('#tool_radio_options',newelem).html(opts);
 	$j('#tool_radio_option_text',newelem).text( options_text );
 	if ( radio.settitle == "Y" ) {
-		$j('#tool_set_as_title_checkbox', newelem).prop('checked', true);
-		$j('#tool_required_checkbox', newelem).prop('checked', true);
+		$j('#set_as_title', newelem).text('Yes');
+		$j('#tool_is_required', newelem).text('Yes');
+		$j('#tool_label', newelem).addClass('tool_is_required');
 	} else {
-		$j('#tool_set_as_title_checkbox', newelem).prop('checked', false);
+		$j('#set_as_title', newelem).text('No');
 		if ( radio.required == "Y" ) {
-			$j('#tool_required_checkbox', newelem).prop('checked', true);
+			$j('#tool_is_required', newelem).text('Yes');
+			$j('#tool_label', newelem).addClass('tool_is_required');
 		} else {
-			$j('#tool_required_checkbox', newelem).prop('checked', false);
+			$j('#tool_is_required', newelem).text('No');
+			$j('#tool_label', newelem).removeClass('tool_is_required');
 		}
 	}
 }
@@ -2499,9 +2517,11 @@ function _form_load_checkbox(checkbox) {
 	$j('#tool_checkbox_options',newelem).html(opts);
 	$j('#tool_checkbox_option_text',newelem).text( options_text );
 	if ( checkbox.required == "Y" ) {
-		$j('#tool_required_checkbox', newelem).prop('checked', true);
+		$j('#tool_is_required', newelem).text('Yes');
+		$j('#tool_label', newelem).addClass('tool_is_required');
 	} else {
-		$j('#tool_required_checkbox', newelem).prop('checked', false);
+		$j('#tool_is_required', newelem).text('No');
+		$j('#tool_label', newelem).removeClass('tool_is_required');
 	}
 }
 
@@ -2541,14 +2561,17 @@ function _form_load_singleselect(singleselect) {
 	$j('#tool_singleselect_options',newelem).html(opts);
 	$j('#tool_singleselect_option_text',newelem).text( options_text );
 	if ( singleselect.settitle == "Y" ) {
-		$j('#tool_set_as_title_checkbox', newelem).prop('checked', true);
-		$j('#tool_required_checkbox', newelem).prop('checked', true);
+		$j('#set_as_title', newelem).text('Yes');
+		$j('#tool_is_required', newelem).text('Yes');
+		$j('#tool_label', newelem).addClass('tool_is_required');
 	} else {
-		$j('#tool_set_as_title_checkbox', newelem).prop('checked', false);
+		$j('#set_as_title', newelem).text('No');
 		if ( singleselect.required == "Y" ) {
-			$j('#tool_required_checkbox', newelem).prop('checked', true);
+			$j('#tool_is_required', newelem).text('Yes');
+			$j('#tool_label', newelem).addClass('tool_is_required');
 		} else {
-			$j('#tool_required_checkbox', newelem).prop('checked', false);
+			$j('#tool_is_required', newelem).text('No');
+			$j('#tool_label', newelem).removeClass('tool_is_required');
 		}
 	}
 }
@@ -2588,9 +2611,11 @@ function _form_load_multiselect(multiselect) {
 	$j('#tool_multiselect_options',newelem).html(opts);
 	$j('#tool_multiselect_option_text',newelem).text( options_text );
 	if ( multiselect.required == "Y" ) {
-		$j('#tool_required_checkbox', newelem).prop('checked', true);
+		$j('#tool_is_required', newelem).text('Yes');
+		$j('#tool_label', newelem).addClass('tool_is_required');
 	} else {
-		$j('#tool_required_checkbox', newelem).prop('checked', false);
+		$j('#tool_is_required', newelem).text('No');
+		$j('#tool_label', newelem).removeClass('tool_is_required');
 	}
 }
 
@@ -2627,9 +2652,11 @@ function _form_load_date(date) {
 		$j('.tool_date_input', newelem).removeClass('tool_data');
 	}
 	if ( date.required == "Y" ) {
-		$j('#tool_required_checkbox', newelem).prop('checked', true);
+		$j('#tool_is_required', newelem).text('Yes');
+		$j('#tool_label', newelem).addClass('tool_is_required');
 	} else {
-		$j('#tool_required_checkbox', newelem).prop('checked', false);
+		$j('#tool_is_required', newelem).text('No');
+		$j('#tool_label', newelem).removeClass('tool_is_required');
 	}
 }
 
@@ -2654,14 +2681,17 @@ function _form_load_attachment(attachment) {
 	$j('#tool_id',newelem).text( attachment.id );
 	$j('#tool_label',newelem).text( attachment.label );
 	if ( attachment.settitle == "Y" ) {
-		$j('#tool_set_as_title_checkbox', newelem).prop('checked', true);
-		$j('#tool_required_checkbox', newelem).prop('checked', true);
+		$j('#set_as_title', newelem).text('Yes');
+		$j('#tool_is_required', newelem).text('Yes');
+		$j('#tool_label', newelem).addClass('tool_is_required');
 	} else {
-		$j('#tool_set_as_title_checkbox', newelem).prop('checked', false);
+		$j('#set_as_title', newelem).text('No');
 		if ( attachment.required == "Y" ) {
-			$j('#tool_required_checkbox', newelem).prop('checked', true);
+			$j('#tool_is_required', newelem).text('Yes');
+			$j('#tool_label', newelem).addClass('tool_is_required');
 		} else {
-			$j('#tool_required_checkbox', newelem).prop('checked', false);
+			$j('#tool_is_required', newelem).text('No');
+			$j('#tool_label', newelem).removeClass('tool_is_required');
 		}
 	}
 
@@ -2694,6 +2724,11 @@ function _form_load_destination(destination) {
 	$j('#_form_formdestination_location').text( destination.location );
 	$j('#_form_formcategory_type').text( destination.category_type );
 	$j('#_form_formcategory_category').text( destination.category_cat );
+	if (destination.category_req != undefined) {
+		$j('#_form_formcategory_required').text( destination.category_req );
+	} else {
+		$j('#_form_formcategory_required').text( 'N' );
+	}
 	$j('#_form_formdestination_submitemail').text( destination.submitemail );
 	$j('#_form_formdestination_email').text( destination.email );
 	categoryUpdateLabel(destination.category_type, destination.category_cat);
@@ -2743,9 +2778,9 @@ function _form_loadCode_Load() {
 
 			_form_load_formname(json.form_name);
 			if ( json.form_name_title == undefined || json.form_name_title == "Y" ) {
-				$j('#_form_form #tool_required_checkbox').prop('checked', true);
+				$j('#_form_form #set_as_title').text('Yes');
 			} else {
-				$j('#_form_form #tool_required_checkbox').prop('checked', false);
+				$j('#_form_form #set_as_title').text('No');
 			}
 
 			for (ndx = 0; ndx < json.form_elements.length; ndx++ ) {
@@ -3046,6 +3081,7 @@ function toolboxElementMousedown(event, elem, removeElem) {
 	} else {
 		$j('._form_tool_drag').removeClass('_form_element_notset');
 	}
+
 	// Insert the blank element at the end of the form.
 	$j(blankelem).insertBefore( $j('#_form_form_fields_end') );
 	blankelem = $j('._form_blank');
@@ -3060,7 +3096,7 @@ function toolboxElementMousedown(event, elem, removeElem) {
 	}
 	resizeForm();
 	// Call the move event handler.
-	toolDragMove(event);
+	//toolDragMove(event);
 	// Set the move and mouseup events.
 	$j('#_form_mainFrame').mousemove(function(e){
 		toolDragMove(e);
@@ -3198,8 +3234,8 @@ function toolDragMouseup(e) {
 			 && $j('._form_tool_drag').attr("id") != 'tool_textblock' ) {
 			newelem +=	toolRequired;
 		}
-			newelem +=	'</div>';
-			// If the drag tool was over the blank element, add it there.
+		newelem +=	'</div>';
+		// If the drag tool was over the blank element, add it there.
 		if (backgroundElement.id == "_form_blank"){
 			insertElem( newelem, backgroundElement);
 		} else {

@@ -128,7 +128,7 @@ function checkFormFields() {
 	 */
 	var ret = true;
 	$j("._form_formelem").each( function(index) { 
-		if ( $j('#tool_required_checkbox', this).attr('checked') ) {
+		if ( $j('#tool_is_required', this).text() == 'Yes' ) {
 			temp = $j(this).attr("id"); 
 			if (temp == "tool_personselector") {
 				if ( $j('#tool_personselector_id_value', this).text() == '-') {
@@ -181,7 +181,16 @@ function checkFormFields() {
 
 			}
 		} 
-	}); 
+	});
+
+	// If Category is required, make sure at least one has been selected...
+	if ( $j('#_form_formcategory_required').text() == 'Y') {
+		if (  ! $j('#_form_category option:selected').length ) {
+			$j('#_form_category').addClass('_form_formelem_error');
+			ret = false;
+		}
+	}
+
 	return ret; 
 } 
 
@@ -370,14 +379,12 @@ function getFormBodyCheckbox(checkbox) {
 	email_body += format($j('#tool_label',checkbox).text()) + ': ';
 	var first = 1;
 	$j('input:checkbox:checked', checkbox).each(function(index, opt){
-		if ($j(this).attr('id') != 'tool_required_checkbox') {
-			doc_body += '<p class="' + $j(this).attr("id") + '">' + format($j(this).val()) + '</p>';
-			if (first != 1) {
-				email_body += ', ';
-			}
-			first = 0;
-			email_body += format($j(this).val());
+		doc_body += '<p class="' + $j(this).attr("id") + '">' + format($j(this).val()) + '</p>';
+		if (first != 1) {
+			email_body += ', ';
 		}
+		first = 0;
+		email_body += format($j(this).val());
 	}); 
 	doc_body += '</td></tr>'; 
 	email_body += newline;
@@ -479,8 +486,8 @@ function getFormBody() {
 function _form_getDocumentName() {
 	var docName = "";
 	// If the form name is set as the title, use it
-	if ( $j('#_form_formname_title #tool_set_as_title_checkbox') == undefined ||
-		 $j('#_form_formname_title #tool_set_as_title_checkbox').attr('checked') ){
+	if ( $j('#_form_formname_title #set_as_title') == undefined ||
+		 $j('#_form_formname_title #set_as_title').text() == 'Yes' ){
 		docName = format( $j('#_form_formname_text').text() );
 	} else {
 		// Loop through all elements on the form
@@ -488,15 +495,15 @@ function _form_getDocumentName() {
 			// Get the type of element
 			type = $j(this).attr("id"); 
 			if ( type == "tool_input" &&
-				 $j('#tool_set_as_title_checkbox', this).attr('checked') ) {
+				 $j('#set_as_title', this).text() == 'Yes' ) {
 				docName = format($j('#tool_input_input',this).val());
 			} else if ( type == "tool_radio" &&
-						$j('#tool_set_as_title_checkbox', this).attr('checked') ) {
+						$j('#set_as_title', this).text() == 'Yes' ) {
 				$j('input:radio:checked', this).each(function(index, opt){
 					docName = format($j(this).val());
 				});
 			} else if ( type == "tool_singleselect" && 
-						$j('#tool_set_as_title_checkbox', this).attr('checked') ) {
+						$j('#set_as_title', this).text() == 'Yes' ) {
 				$j('option:selected', this).each(function(index, opt){ 
 					docName = format($j(this).val()); 
 				});
@@ -926,9 +933,13 @@ $j(document).ready(function() {
 			url: categoryURL,
 			dataType: "json",
 			success: function (data) {
-				var opts = '	<label id="_form_formcategory_label" class="col-xs-3 control-label">Select Category</label>'
-						 + '	<div class="col-xs-9">'
-						 + '		<select id="_form_formcategory_options" name="category_options" class="input-xlarge form-control"';
+				var opts = '	<label id="_form_formcategory_label" class="col-xs-3 control-label';
+				if ( $j('#_form_formcategory_required').text() == 'Y') {
+					opts += ' tool_is_required';
+				}
+				opts += '">Select Category</label>'
+					 + '	<div class="col-xs-9">'
+					 + '		<select id="_form_formcategory_options" name="category_options" class="input-xlarge form-control"';
 				if ( $j('#_form_formcategory_type').text() == 'multiple' ) opts += ' multiple="multiple"';
 				opts += '>';
 				if(data.list.length){
