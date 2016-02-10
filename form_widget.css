@@ -49,6 +49,13 @@ This Jive HTML widget allows users to build forms via a drag & drop interface.
 	display: none;
 }
 
+.tool_is_required:before {
+    color: #e32;
+    content: '* ';
+	font-size: x-large;
+	vertical-align: middle;
+}
+
 ._form_formelem_error {
 	background-color: rgb(255, 220, 220);
 	padding: 4px;
