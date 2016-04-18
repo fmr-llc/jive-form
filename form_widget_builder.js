@@ -1,7 +1,7 @@
 /* 
 Jive - Form Widget Builder
 
-Copyright (c) 2015 Fidelity Investments
+Copyright (c) 2015-2016 Fidelity Investments
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
@@ -14,7 +14,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-DESCRIPTION
+FILE DESCRIPTION
+This is the Javascript library that drives the form widget builder application.
+
+WIDGET DESCRIPTION
 This Jive HTML widget allows users to build forms via a drag & drop interface.
 */
 var fidosreg_id = 'b764a0a9536448345dc227af95e192521d337b5e4c3560c859b89ecd0407004a';
